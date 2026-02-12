@@ -22,7 +22,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
     }
 
     return (
-        <div className="flex h-screen w-full flex-col bg-bg-gray overflow-hidden transition-colors duration-300">
+        <div className="flex h-screen w-full flex-col bg-slate-50 dark:bg-slate-950 overflow-hidden transition-colors duration-300">
             {/* Fixed Navbar */}
             <Navbar />
 

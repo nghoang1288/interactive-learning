@@ -47,6 +47,8 @@ export function VideoPlayer({
     const [answeredQuizIds, setAnsweredQuizIds] = useState<Set<string>>(new Set());
     const [lockedUntil, setLockedUntil] = useState(0);
 
+    const [maxWatched, setMaxWatched] = useState(0);
+
     // Initialize lockedUntil based on quizzes
     useEffect(() => {
         const sortedQuizzes = [...quizzes].sort((a, b) => a.timestamp - b.timestamp);
@@ -65,6 +67,12 @@ export function VideoPlayer({
         if (!videoRef.current) return;
         const time = videoRef.current.currentTime;
         setCurrentTime(time);
+
+        // Update Max Watched
+        if (time > maxWatched) {
+            setMaxWatched(time);
+        }
+
         onProgressUpdate?.(time);
 
         // Check for quizzes
@@ -102,7 +110,12 @@ export function VideoPlayer({
         if (activeQuiz) {
             setAnsweredQuizIds(prev => new Set(prev).add(activeQuiz.id));
             setActiveQuiz(null);
-            videoRef.current?.play();
+
+            // Critical Fix: Jump forward slightly to avoid re-triggering the same quiz due to async state update
+            if (videoRef.current) {
+                videoRef.current.currentTime += 1;
+                videoRef.current.play();
+            }
             setIsPlaying(true);
         }
     };
@@ -160,6 +173,7 @@ export function VideoPlayer({
                 isFullscreen={isFullscreen}
                 toggleFullscreen={toggleFullscreen}
                 lockedUntil={lockedUntil}
+                maxWatched={maxWatched}
                 quizMarkers={quizzes.map(q => q.timestamp)}
             />
         </div>

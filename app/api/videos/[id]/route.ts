@@ -96,12 +96,14 @@ export async function DELETE(
             return NextResponse.json({ error: "Không tìm thấy video hoặc bạn không có quyền xóa" }, { status: 404 });
         }
 
-        // 1. Delete file from disk
-        const filePath = join(process.cwd(), "public", video.url);
-        try {
-            await unlink(filePath);
-        } catch (e) {
-            console.warn("Could not delete file:", filePath);
+        // 1. Delete file from disk (only for uploaded videos, not YouTube)
+        if (video.videoType !== "YOUTUBE") {
+            const filePath = join(process.cwd(), "public", video.url);
+            try {
+                await unlink(filePath);
+            } catch (e) {
+                console.warn("Could not delete file:", filePath);
+            }
         }
 
         // 2. Delete from database

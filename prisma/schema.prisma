@@ -15,6 +15,11 @@ enum Role {
   ADMIN
 }
 
+enum VideoType {
+  UPLOAD
+  YOUTUBE
+}
+
 // ===== USERS =====
 model User {
   id        String   @id @default(cuid())
@@ -33,12 +38,13 @@ model User {
 
 // ===== VIDEOS =====
 model Video {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   title       String
   description String?
-  filename    String   // original filename
-  url         String   // path to video file
-  duration    Int      // total seconds
+  filename    String?   // original filename (null for YouTube)
+  url         String    // local path OR YouTube video ID
+  duration    Int?      // total seconds (null for YouTube)
+  videoType   VideoType @default(UPLOAD)
   authorId    String
   author      User     @relation(fields: [authorId], references: [id])
   createdAt   DateTime @default(now())

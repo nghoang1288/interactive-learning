@@ -28,6 +28,7 @@ interface VideoControlsProps {
     isFullscreen: boolean;
     toggleFullscreen: () => void;
     lockedUntil: number; // For seek prevention
+    maxWatched: number; // For smart seeking
     quizMarkers: number[]; // Array of timestamps for markers
 }
 
@@ -44,11 +45,13 @@ export function VideoControls({
     isFullscreen,
     toggleFullscreen,
     lockedUntil,
+    maxWatched,
     quizMarkers
 }: VideoControlsProps) {
     const [showVolumeSlider, setShowVolumeSlider] = useState(false);
     const progressPercentage = (currentTime / duration) * 100 || 0;
     const lockedPercentage = (lockedUntil / duration) * 100 || 0;
+    const watchedPercentage = (maxWatched / duration) * 100 || 0;
 
     const handleTogglePlay = () => {
         if (videoRef.current) {
@@ -64,9 +67,16 @@ export function VideoControls({
     const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
         const time = parseFloat(e.target.value);
         if (videoRef.current) {
-            // Seek prevention logic
-            if (time > lockedUntil && lockedUntil < duration) {
-                videoRef.current.currentTime = lockedUntil;
+            // Smart Seek: Allow rewinding, but prevent forward seeking past maxWatched
+            // UNLESS the video is completed (optional, but good UX)
+            // For now, strict maxWatched
+
+            // Also respect lockedUntil (Quiz block)
+            const limit = Math.min(lockedUntil, maxWatched);
+
+            if (time > limit) {
+                // Trying to seek past allowed
+                videoRef.current.currentTime = limit;
             } else {
                 videoRef.current.currentTime = time;
             }
@@ -86,10 +96,10 @@ export function VideoControls({
                     />
                 ))}
 
-                {/* Locked Background */}
+                {/* Max Watched Background */}
                 <div
                     className="absolute inset-y-0 left-0 bg-white/30 rounded-full"
-                    style={{ width: `${lockedPercentage}%` }}
+                    style={{ width: `${watchedPercentage}%` }}
                 />
 
                 {/* Progress Fill */}
@@ -98,8 +108,8 @@ export function VideoControls({
                     style={{ width: `${progressPercentage}%` }}
                 />
 
-                {/* Range Input Overlay - REMOVED for "No Seek" policy */}
-                {/* <input
+                {/* Range Input Overlay - RESTORED for Smart Seek */}
+                <input
                     type="range"
                     min={0}
                     max={duration || 0}
@@ -107,7 +117,7 @@ export function VideoControls({
                     value={currentTime}
                     onChange={handleSeek}
                     className="absolute inset-0 z-30 w-full cursor-pointer opacity-0"
-                /> */}
+                />
             </div>
 
             <div className="flex items-center justify-between">

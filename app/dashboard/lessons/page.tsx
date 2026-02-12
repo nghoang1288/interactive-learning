@@ -14,14 +14,15 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Badge } from "@/components/ui/Badge";
 import Link from "next/link";
-import { cn, formatDuration } from "@/lib/utils";
+import { cn, formatDuration, getYouTubeThumbnail } from "@/lib/utils";
 
 interface Lesson {
     id: string;
     title: string;
     description: string;
     url: string;
-    duration: number;
+    duration: number | null;
+    videoType?: string;
     createdAt: string;
     author: {
         name: string;
@@ -61,7 +62,7 @@ export default function LessonsPage() {
             <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
                 <div className="space-y-1">
                     <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Khám phá bài học</h1>
-                    <p className="text-slate-500 dark:text-slate-400">Tìm kiếm và chọn bài giảng video có Quiz tương tác để bắt đầu học.</p>
+                    <p className="text-slate-600 dark:text-slate-400">Tìm kiếm và chọn bài giảng video có Quiz tương tác để bắt đầu học.</p>
                 </div>
             </div>
 
@@ -111,14 +112,32 @@ export default function LessonsPage() {
                         <Link key={lesson.id} href={`/dashboard/lessons/${lesson.id}`} className="group">
                             <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-teal-100/50 hover:-translate-y-1 group-hover:border-teal-100">
                                 <div className="relative aspect-video bg-slate-900 overflow-hidden">
+                                    {lesson.videoType === "YOUTUBE" ? (
+                                        <img
+                                            src={getYouTubeThumbnail(lesson.url)}
+                                            alt={lesson.title}
+                                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                        />
+                                    ) : (
+                                        <>
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            <div className="absolute inset-0 flex items-center justify-center text-white/50 group-hover:text-white transition-colors">
+                                                <VideoIcon size={48} className="drop-shadow-lg" />
+                                            </div>
+                                        </>
+                                    )}
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                    <div className="absolute inset-0 flex items-center justify-center text-white/50 group-hover:text-white transition-colors">
-                                        <VideoIcon size={48} className="drop-shadow-lg" />
-                                    </div>
-                                    <div className="absolute bottom-3 right-3 z-20">
-                                        <Badge className="bg-black/60 text-white border-0 backdrop-blur-sm px-2 py-0.5 font-bold">
-                                            {formatDuration(lesson.duration)}
-                                        </Badge>
+                                    <div className="absolute bottom-3 right-3 z-20 flex gap-1.5">
+                                        {lesson.videoType === "YOUTUBE" && (
+                                            <Badge className="bg-red-600 text-white border-0 px-2 py-0.5 font-bold text-[10px]">
+                                                YouTube
+                                            </Badge>
+                                        )}
+                                        {lesson.duration != null && (
+                                            <Badge className="bg-black/60 text-white border-0 backdrop-blur-sm px-2 py-0.5 font-bold">
+                                                {formatDuration(lesson.duration)}
+                                            </Badge>
+                                        )}
                                     </div>
                                 </div>
                                 <CardHeader className="space-y-3">
@@ -132,7 +151,7 @@ export default function LessonsPage() {
                                     </CardTitle>
                                 </CardHeader>
                                 <CardFooter className="pt-0 flex flex-col items-start gap-4">
-                                    <p className="text-sm text-slate-500 line-clamp-2 leading-relaxed dark:text-slate-400">
+                                    <p className="text-sm text-slate-600 line-clamp-2 leading-relaxed dark:text-slate-400">
                                         {lesson.description || "Tìm hiểu thêm qua bài giảng video tương tác này."}
                                     </p>
                                     <div className="flex w-full items-center justify-between border-t border-slate-100 pt-4">

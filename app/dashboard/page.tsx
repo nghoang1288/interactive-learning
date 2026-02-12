@@ -125,7 +125,7 @@ export default function DashboardPage() {
                 {statsCards.map((stat) => (
                     <Card key={stat.title} className="hover:shadow-md transition-shadow border-slate-100">
                         <CardHeader className="flex flex-row items-center justify-between pb-2">
-                            <CardTitle className="text-sm font-medium text-slate-500 dark:text-slate-400">{stat.title}</CardTitle>
+                            <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">{stat.title}</CardTitle>
                             <div className={cn("rounded-xl p-2.5", stat.bg)}>
                                 <stat.icon className={cn("h-5 w-5", stat.color)} />
                             </div>
@@ -235,7 +235,7 @@ export default function DashboardPage() {
                                                     {act.completed ? " đã hoàn thành " : " đang xem "}
                                                     <span className="text-teal-600 dark:text-teal-400">{act.video?.title}</span>
                                                 </p>
-                                                <p className="text-[10px] text-slate-500 mt-1 uppercase font-semibold tracking-wider dark:text-slate-400">
+                                                <p className="text-[10px] text-slate-600 mt-1 uppercase font-semibold tracking-wider dark:text-slate-400">
                                                     {formatDate(act.updatedAt)}
                                                 </p>
                                             </div>

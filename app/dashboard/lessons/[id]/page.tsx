@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { VideoPlayer } from "@/components/video/VideoPlayer";
+import { YouTubePlayer } from "@/components/video/YouTubePlayer";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -14,7 +15,7 @@ import { formatDate } from "@/lib/utils";
 
 interface Option { id: string; text: string; isCorrect: boolean; }
 interface Quiz { id: string; question: string; timestamp: number; options: Option[]; }
-interface LessonData { id: string; title: string; description: string; url: string; createdAt: string; authorId: string; author: { name: string }; quizzes: Quiz[]; }
+interface LessonData { id: string; title: string; description: string; url: string; videoType?: string; createdAt: string; authorId: string; author: { name: string }; quizzes: Quiz[]; }
 
 export default function LessonDetailPage() {
     const { data: session } = useSession();
@@ -167,7 +168,7 @@ export default function LessonDetailPage() {
                 <Button asChild variant="ghost" size="icon" className="rounded-full h-10 w-10"><Link href="/dashboard/lessons"><ArrowLeft size={20} /></Link></Button>
                 <div className="flex flex-col">
                     <h1 className="text-2xl font-bold text-slate-900 line-clamp-1 dark:text-white">{lesson.title}</h1>
-                    <div className="flex items-center gap-3 text-xs font-semibold text-slate-500 uppercase tracking-widest mt-1 dark:text-slate-400">
+                    <div className="flex items-center gap-3 text-xs font-semibold text-slate-600 uppercase tracking-widest mt-1 dark:text-slate-400">
                         <span className="flex items-center gap-1.5"><User size={12} /> {lesson.author?.name || "Ẩn danh"}</span>
                         <span className="h-1 w-1 rounded-full bg-slate-300 dark:bg-slate-600" />
                         <span className="flex items-center gap-1.5"><Clock size={12} /> {formatDate(lesson.createdAt)}</span>
@@ -176,10 +177,14 @@ export default function LessonDetailPage() {
             </div>
             <div className="grid gap-8 lg:grid-cols-3">
                 <div className="lg:col-span-2 space-y-6">
-                    <VideoPlayer url={lesson.url} videoId={lesson.id} quizzes={lesson.quizzes} initialTime={progress?.currentTime || 0} onProgressUpdate={handleProgressUpdate} onComplete={handleComplete} />
+                    {lesson.videoType === "YOUTUBE" ? (
+                        <YouTubePlayer youtubeId={lesson.url} videoId={lesson.id} quizzes={lesson.quizzes} initialTime={progress?.currentTime || 0} onProgressUpdate={handleProgressUpdate} onComplete={handleComplete} />
+                    ) : (
+                        <VideoPlayer url={lesson.url} videoId={lesson.id} quizzes={lesson.quizzes} initialTime={progress?.currentTime || 0} onProgressUpdate={handleProgressUpdate} onComplete={handleComplete} />
+                    )}
                     <Card className="border-0 shadow-sm ring-1 ring-slate-100 dark:ring-slate-800">
                         <CardHeader><CardTitle>Mô tả bài học</CardTitle></CardHeader>
-                        <CardContent><p className="text-slate-600 leading-relaxed whitespace-pre-wrap dark:text-slate-300">{lesson.description || "Chưa có mô tả."}</p></CardContent>
+                        <CardContent><p className="text-slate-700 leading-relaxed whitespace-pre-wrap dark:text-slate-300">{lesson.description || "Chưa có mô tả."}</p></CardContent>
                     </Card>
                 </div>
                 <div className="space-y-6">

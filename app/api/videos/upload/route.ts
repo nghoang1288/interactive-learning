@@ -23,6 +23,16 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: "Chưa đăng nhập" }, { status: 401 });
         }
 
+        // Verify user still exists in DB
+        const user = await prisma.user.findUnique({
+            where: { id: session.user.id },
+            select: { id: true }
+        });
+
+        if (!user) {
+            return NextResponse.json({ error: "Tài khoản không tồn tại. Vui lòng đăng nhập lại." }, { status: 401 });
+        }
+
         // 2. Check for Raw Binary Upload Headers
         const headerTitle = req.headers.get("X-Upload-Title");
         const headerDesc = req.headers.get("X-Upload-Desc");
