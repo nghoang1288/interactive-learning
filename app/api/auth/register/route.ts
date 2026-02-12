@@ -51,10 +51,16 @@ export async function POST(req: Request) {
             },
             { status: 201 }
         );
-    } catch (error) {
-        console.error("Register error:", error);
+    } catch (error: any) {
+        console.error("Register error:", JSON.stringify({
+            name: error?.name,
+            code: error?.code,
+            message: error?.message,
+            meta: error?.meta,
+            clientVersion: error?.clientVersion,
+        }));
         return NextResponse.json(
-            { error: "Đã xảy ra lỗi. Vui lòng thử lại." },
+            { error: error?.message || "Đã xảy ra lỗi. Vui lòng thử lại." },
             { status: 500 }
         );
     }
