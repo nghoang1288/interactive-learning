@@ -53,7 +53,7 @@ export default async function LessonAnalyticsPage(props: Props) {
         return {
             ...user,
             status,
-            progressPercent: prog ? Math.round((prog.currentTime / video.duration) * 100) : 0,
+            progressPercent: (prog && video.duration) ? Math.round((prog.currentTime / video.duration) * 100) : 0,
             lastActivity: prog?.updatedAt,
             correctQuizzes: user.quizResults.filter(q => q.isCorrect).length
         };
@@ -68,7 +68,7 @@ export default async function LessonAnalyticsPage(props: Props) {
                 <div>
                     <h1 className="text-2xl font-bold text-slate-900">{video.title}</h1>
                     <div className="flex gap-4 text-slate-500 text-sm mt-1">
-                        <span>⏱ {formatDuration(video.duration)}</span>
+                        <span>⏱ {formatDuration(video.duration || 0)}</span>
                         <span>❓ {video._count.quizzes} câu hỏi</span>
                     </div>
                 </div>
