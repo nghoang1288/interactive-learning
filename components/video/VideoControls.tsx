@@ -30,6 +30,8 @@ interface VideoControlsProps {
     lockedUntil: number; // For seek prevention
     maxWatched: number; // For smart seeking
     quizMarkers: number[]; // Array of timestamps for markers
+    isCompleted?: boolean;
+    onMarkComplete?: () => void;
 }
 
 export function VideoControls({
@@ -46,7 +48,9 @@ export function VideoControls({
     toggleFullscreen,
     lockedUntil,
     maxWatched,
-    quizMarkers
+    quizMarkers,
+    isCompleted = false,
+    onMarkComplete
 }: VideoControlsProps) {
     const [showVolumeSlider, setShowVolumeSlider] = useState(false);
     const progressPercentage = (currentTime / duration) * 100 || 0;
@@ -74,7 +78,7 @@ export function VideoControls({
             // Also respect lockedUntil (Quiz block)
             const limit = Math.min(lockedUntil, maxWatched);
 
-            if (time > limit) {
+            if (!isCompleted && time > limit) {
                 // Trying to seek past allowed
                 videoRef.current.currentTime = limit;
             } else {
@@ -140,7 +144,21 @@ export function VideoControls({
                     >
                         <RotateCcw size={20} />
                     </Button>
-                    */}
+                    {/* Mark as Complete Button */}
+                    {!isCompleted && onMarkComplete && (
+                        <div className="flex items-center ml-2 border-l border-white/20 pl-4">
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={onMarkComplete}
+                                className="text-white hover:bg-emerald-500/20 hover:text-emerald-400 gap-2 h-8 rounded-full px-3 transition-colors border border-white/10"
+                                title="Đánh dấu hoàn thành để mở khóa tua video"
+                            >
+                                <div className="h-4 w-4 rounded-full border-2 border-current" />
+                                <span className="text-xs font-medium">Hoàn thành</span>
+                            </Button>
+                        </div>
+                    )}
 
                     <div className="flex items-center gap-2 text-sm font-medium text-white">
                         <span>{formatDuration(currentTime)}</span>

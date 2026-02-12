@@ -26,6 +26,7 @@ interface YouTubePlayerProps {
     initialTime?: number;
     onProgressUpdate?: (time: number) => void;
     onComplete?: () => void;
+    isCompleted?: boolean;
 }
 
 // YouTube IFrame API types
@@ -43,6 +44,7 @@ export function YouTubePlayer({
     initialTime = 0,
     onProgressUpdate,
     onComplete,
+    isCompleted = false
 }: YouTubePlayerProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const playerRef = useRef<any>(null);
@@ -215,7 +217,7 @@ export function YouTubePlayer({
         const time = parseFloat(e.target.value);
         if (playerRef.current) {
             const limit = Math.min(lockedUntil, maxWatched);
-            if (time > limit) {
+            if (!isCompleted && time > limit) {
                 playerRef.current.seekTo(limit, true);
             } else {
                 playerRef.current.seekTo(time, true);
@@ -340,6 +342,22 @@ export function YouTubePlayer({
                             {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
                         </Button>
                     </div>
+
+                    {/* Mark as Complete for YouTube */}
+                    {!isCompleted && onComplete && (
+                        <div className="flex items-center border-l border-white/20 pl-4 mx-4">
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={onComplete}
+                                className="text-white hover:bg-emerald-500/20 hover:text-emerald-400 gap-2 h-8 rounded-full px-3 transition-colors border border-white/10"
+                                title="Đánh dấu hoàn thành để mở khóa tua video"
+                            >
+                                <div className="h-4 w-4 rounded-full border-2 border-current" />
+                                <span className="text-xs font-medium">Hoàn thành</span>
+                            </Button>
+                        </div>
+                    )}
 
                     <div className="flex items-center gap-2">
                         <Button

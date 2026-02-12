@@ -25,6 +25,7 @@ interface VideoPlayerProps {
     initialTime?: number;
     onProgressUpdate?: (time: number) => void;
     onComplete?: () => void;
+    isCompleted?: boolean;
 }
 
 export function VideoPlayer({
@@ -33,7 +34,8 @@ export function VideoPlayer({
     quizzes,
     initialTime = 0,
     onProgressUpdate,
-    onComplete
+    onComplete,
+    isCompleted = false
 }: VideoPlayerProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -175,6 +177,8 @@ export function VideoPlayer({
                 lockedUntil={lockedUntil}
                 maxWatched={maxWatched}
                 quizMarkers={quizzes.map(q => q.timestamp)}
+                isCompleted={isCompleted}
+                onMarkComplete={onComplete}
             />
         </div>
     );

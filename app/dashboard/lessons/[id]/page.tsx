@@ -178,9 +178,9 @@ export default function LessonDetailPage() {
             <div className="grid gap-8 lg:grid-cols-3">
                 <div className="lg:col-span-2 space-y-6">
                     {lesson.videoType === "YOUTUBE" ? (
-                        <YouTubePlayer youtubeId={lesson.url} videoId={lesson.id} quizzes={lesson.quizzes} initialTime={progress?.currentTime || 0} onProgressUpdate={handleProgressUpdate} onComplete={handleComplete} />
+                        <YouTubePlayer youtubeId={lesson.url} videoId={lesson.id} quizzes={lesson.quizzes} initialTime={progress?.currentTime || 0} onProgressUpdate={handleProgressUpdate} onComplete={handleComplete} isCompleted={isCompleted} />
                     ) : (
-                        <VideoPlayer url={lesson.url} videoId={lesson.id} quizzes={lesson.quizzes} initialTime={progress?.currentTime || 0} onProgressUpdate={handleProgressUpdate} onComplete={handleComplete} />
+                        <VideoPlayer url={lesson.url} videoId={lesson.id} quizzes={lesson.quizzes} initialTime={progress?.currentTime || 0} onProgressUpdate={handleProgressUpdate} onComplete={handleComplete} isCompleted={isCompleted} />
                     )}
                     <Card className="border-0 shadow-sm ring-1 ring-slate-100 dark:ring-slate-800">
                         <CardHeader><CardTitle>Mô tả bài học</CardTitle></CardHeader>

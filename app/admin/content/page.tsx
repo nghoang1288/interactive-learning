@@ -47,7 +47,7 @@ export default async function AdminContentPage() {
                                 </Link>
                             </div>
                             <span className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                                {formatDuration(video.duration)}
+                                {formatDuration(video.duration || 0)}
                             </span>
                         </div>
                         <div className="p-4">
