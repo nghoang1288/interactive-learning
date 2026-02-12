@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    experimental: {
+  serverExternalPackages: ['@prisma/client', 'bcryptjs', 'pg'],
+  experimental: {
     serverActions: {
       bodySizeLimit: '200mb',
     },
