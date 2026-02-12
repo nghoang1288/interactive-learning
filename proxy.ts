@@ -4,7 +4,7 @@ import { authConfig } from "./lib/auth.config";
 
 // export default NextAuth(authConfig).auth;
 
-export default function middleware() {
+export default function proxy() {
     // Debug: Pass-through to verify if NextAuth is causing the crash
     return NextResponse.next();
 }
