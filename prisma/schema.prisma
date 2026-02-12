@@ -3,11 +3,11 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../app/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 enum Role {
@@ -109,5 +109,5 @@ model QuizResult {
   attempts   Int        @default(1) // number of tries
   answeredAt DateTime   @default(now())
 
-  @@unique([userId, quizId]) // 1 user - 1 quiz = 1 result (update on retry)
+  @@unique([userId, quizId]) // 1 user - 1 result (but keeping multiple attempts logic might need different schema, essentially this is 'latest result')
 }
