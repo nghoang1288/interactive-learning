@@ -1,10 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import NextAuth from "next-auth";
 import { authConfig } from "./lib/auth.config";
 
 // export default NextAuth(authConfig).auth;
 
-export default function proxy() {
+export function proxy(request: NextRequest) {
     // Debug: Pass-through to verify if NextAuth is causing the crash
     return NextResponse.next();
 }
