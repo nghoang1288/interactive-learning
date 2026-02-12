@@ -10,11 +10,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "@prisma/client": "^7.3.0",
-=======
     "@prisma/client": "^6.0.0",
->>>>>>> 5d23515638e373c1040036175310550b718be94f
     "@radix-ui/react-slot": "^1.2.4",
     "@types/bcryptjs": "^2.4.6",
     "bcryptjs": "^3.0.3",
