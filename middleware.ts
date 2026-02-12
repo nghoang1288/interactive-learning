@@ -1,3 +1,4 @@
+import { NextResponse } from "next/server";
 import NextAuth from "next-auth";
 import { authConfig } from "./lib/auth.config";
 
@@ -5,6 +6,7 @@ import { authConfig } from "./lib/auth.config";
 
 export default function middleware() {
     // Debug: Pass-through to verify if NextAuth is causing the crash
+    return NextResponse.next();
 }
 
 export const config = {
