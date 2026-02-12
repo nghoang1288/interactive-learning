@@ -1,0 +1,107 @@
+// Doctor Learning Platform - Database Schema
+// Unified member system - all users can upload and learn
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+// ===== USERS =====
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String   // bcrypt hash
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations - every member can do everything
+  videos      Video[]       // Videos uploaded by this user
+  progress    Progress[]    // Learning progress
+  quizResults QuizResult[]  // Quiz answers
+}
+
+// ===== VIDEOS =====
+model Video {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  filename    String   // original filename
+  url         String   // path to video file
+  duration    Int      // total seconds
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  quizzes  Quiz[]
+  progress Progress[]
+}
+
+// ===== QUIZZES =====
+model Quiz {
+  id        String   @id @default(cuid())
+  videoId   String
+  video     Video    @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  timestamp Int      // seconds - when to pause video
+  question  String
+  createdAt DateTime @default(now())
+
+  // Relations
+  options QuizOption[]
+  results QuizResult[]
+}
+
+// ===== QUIZ OPTIONS =====
+model QuizOption {
+  id        String  @id @default(cuid())
+  quizId    String
+  quiz      Quiz    @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  text      String
+  isCorrect Boolean @default(false)
+
+  // Relations
+  results QuizResult[]
+}
+
+// ===== PROGRESS =====
+model Progress {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  videoId     String
+  video       Video     @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  currentTime Int       @default(0)  // seconds - current position
+  completed   Boolean   @default(false)
+  completedAt DateTime?
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([userId, videoId]) // 1 user - 1 video = 1 progress
+}
+
+// ===== QUIZ RESULTS =====
+model QuizResult {
+  id         String     @id @default(cuid())
+  userId     String
+  user       User       @relation(fields: [userId], references: [id])
+  quizId     String
+  quiz       Quiz       @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  optionId   String
+  option     QuizOption @relation(fields: [optionId], references: [id])
+  isCorrect  Boolean
+  attempts   Int        @default(1) // number of tries
+  answeredAt DateTime   @default(now())
+
+  @@unique([userId, quizId]) // 1 user - 1 quiz = 1 result (update on retry)
+}

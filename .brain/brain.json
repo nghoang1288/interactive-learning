@@ -1,0 +1,10 @@
+{
+  "project": {
+    "name": "interactive-learning",
+    "description": "Teacher Upload video + Tạo câu hỏi (Quiz) tại các timestamp cụ thể. Student học hết video.",
+    "created_at": "2026-02-10T17:07:36+07:00"
+  },
+  "tech_stack": [],
+  "features": [],
+  "decisions": []
+}
