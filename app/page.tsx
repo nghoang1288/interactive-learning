@@ -12,20 +12,20 @@ export default async function LandingPage() {
   }
 
   return (
-    <div className="w-full bg-white overflow-hidden">
+    <div className="w-full bg-white dark:bg-slate-950 overflow-hidden">
       {/* ===== HERO SECTION ===== */}
-      <section className="relative py-24 md:py-36 overflow-hidden bg-white w-full flex justify-center">
-        <div className="absolute -top-24 right-0 w-[30rem] h-[30rem] bg-teal-50/70 rounded-full blur-[80px] opacity-60" />
-        <div className="absolute -bottom-24 left-0 w-[30rem] h-[30rem] bg-cyan-50/70 rounded-full blur-[80px] opacity-60" />
+      <section className="relative py-24 md:py-36 overflow-hidden bg-white dark:bg-slate-950 w-full flex justify-center">
+        <div className="absolute -top-24 right-0 w-[30rem] h-[30rem] bg-teal-50/70 dark:bg-teal-900/20 rounded-full blur-[80px] opacity-60" />
+        <div className="absolute -bottom-24 left-0 w-[30rem] h-[30rem] bg-cyan-50/70 dark:bg-cyan-900/20 rounded-full blur-[80px] opacity-60" />
 
         <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 flex justify-center">
           <div className="max-w-4xl mx-auto text-center">
             <Badge variant="primary" className="mb-8 px-5 py-1.5 shadow-sm">🩺 Nền tảng học Y khoa thế hệ mới</Badge>
-            <h1 className="text-4xl md:text-7xl font-extrabold mb-8 tracking-tight text-slate-900 leading-[1.15]">
-              Học Y khoa <span className="bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-cyan-600">tương tác</span><br />
+            <h1 className="text-4xl md:text-7xl font-extrabold mb-8 tracking-tight text-slate-900 dark:text-white leading-[1.15]">
+              Học Y khoa <span className="bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-cyan-600 dark:from-teal-400 dark:to-cyan-400">tương tác</span><br />
               thông minh hơn
             </h1>
-            <p className="text-lg md:text-xl text-slate-600 mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
+            <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
               Biến bài giảng video thành trải nghiệm học tập chủ động.
               Tạo Quiz tích hợp — nắm vững kiến thức Y khoa ngay khi đang xem.
             </p>
@@ -42,11 +42,11 @@ export default async function LandingPage() {
       </section>
 
       {/* ===== DEMO VIDEO SECTION ===== */}
-      <section id="demo" className="py-24 bg-slate-50/60 border-y border-slate-100/80 w-full flex flex-col items-center">
+      <section id="demo" className="py-24 bg-slate-50/60 dark:bg-slate-900/60 border-y border-slate-100/80 dark:border-slate-800/80 w-full flex flex-col items-center">
         <div className="w-full max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">🎬 Trải nghiệm thực tế</h2>
-            <p className="text-slate-500 text-lg">Mô phỏng hiển thị Quiz tương tác trên trình phát video.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">🎬 Trải nghiệm thực tế</h2>
+            <p className="text-slate-500 dark:text-slate-400 text-lg">Mô phỏng hiển thị Quiz tương tác trên trình phát video.</p>
           </div>
           <DemoVideoPlayer />
           <div className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-8">
@@ -60,8 +60,8 @@ export default async function LandingPage() {
                 <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-600 text-white font-bold text-base mb-5 shadow-xl shadow-teal-100 group-hover:bg-black group-hover:scale-110 transition-all duration-300">
                   {item.step}
                 </div>
-                <h4 className="font-bold text-slate-900 mb-2 text-lg">{item.title}</h4>
-                <p className="text-sm text-slate-500 leading-relaxed px-2">{item.desc}</p>
+                <h4 className="font-bold text-slate-900 dark:text-white mb-2 text-lg">{item.title}</h4>
+                <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed px-2">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -69,12 +69,12 @@ export default async function LandingPage() {
       </section>
 
       {/* ===== FEATURES SECTION ===== */}
-      <section className="py-28 bg-white w-full flex justify-center">
+      <section className="py-28 bg-white dark:bg-slate-950 w-full flex justify-center">
         <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-end justify-between mb-20 gap-8">
             <div className="max-w-2xl">
-              <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight">✨ Tại sao chọn Doctor Learning?</h2>
-              <p className="text-lg text-slate-500 leading-relaxed">Công cụ giúp chia sẻ và tiếp nhận kiến thức Y khoa hiệu quả hơn.</p>
+              <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight">✨ Tại sao chọn Doctor Learning?</h2>
+              <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed">Công cụ giúp chia sẻ và tiếp nhận kiến thức Y khoa hiệu quả hơn.</p>
             </div>
             <Link href="/register" className="group text-teal-600 font-bold hover:text-black flex items-center gap-2 transition-colors">
               Khám phá tất cả <PlusCircle size={20} className="group-hover:translate-x-1 transition-transform" />
@@ -86,12 +86,12 @@ export default async function LandingPage() {
               { icon: MessageSquare, title: "Quiz thông minh", desc: "Người xem phải trả lời đúng mới có thể xem tiếp — đảm bảo nắm vững kiến thức.", color: "text-cyan-600", bg: "bg-cyan-50" },
               { icon: BarChart3, title: "Báo cáo Insight", desc: "Xem chi tiết tiến độ học tập, biết được phần nào hay trả lời sai nhất.", color: "text-emerald-600", bg: "bg-emerald-50" },
             ].map((feature) => (
-              <div key={feature.title} className="group p-10 rounded-[2.5rem] border border-slate-100 bg-white hover:shadow-2xl hover:shadow-teal-100/30 transition-all duration-500 hover:-translate-y-2">
+              <div key={feature.title} className="group p-10 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 hover:shadow-2xl hover:shadow-teal-100/30 dark:hover:shadow-teal-900/10 transition-all duration-500 hover:-translate-y-2">
                 <div className={cn("h-16 w-16 rounded-2xl flex items-center justify-center mb-8 transition-transform group-hover:rotate-6", feature.bg)}>
                   <feature.icon className={cn("h-8 w-8", feature.color)} />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-4">{feature.title}</h3>
-                <p className="text-slate-500 leading-relaxed text-lg">{feature.desc}</p>
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">{feature.title}</h3>
+                <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-lg">{feature.desc}</p>
               </div>
             ))}
           </div>
@@ -116,11 +116,11 @@ export default async function LandingPage() {
       </section>
 
       {/* ===== FOOTER ===== */}
-      <footer className="py-20 border-t border-slate-100 w-full flex justify-center">
-        <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 text-center text-slate-500 text-base">
-          <div className="flex items-center justify-center gap-2 text-slate-900 font-bold mb-6">
-            <Stethoscope className="text-teal-600" size={24} />
-            <span className="text-xl tracking-tight">Doctor <span className="text-teal-600">Learning</span></span>
+      <footer className="py-20 border-t border-slate-100 dark:border-slate-800 w-full flex justify-center">
+        <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 text-center text-slate-500 dark:text-slate-400 text-base">
+          <div className="flex items-center justify-center gap-2 text-slate-900 dark:text-white font-bold mb-6">
+            <Stethoscope className="text-teal-600 dark:text-teal-400" size={24} />
+            <span className="text-xl tracking-tight">Doctor <span className="text-teal-600 dark:text-teal-400">Learning</span></span>
           </div>
           <p>© 2026 Doctor Learning. Nền tảng học Y khoa tương tác.</p>
         </div>

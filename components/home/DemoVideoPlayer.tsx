@@ -46,8 +46,9 @@ const DEMO_QUIZZES: QuizItem[] = [
 
 export function DemoVideoPlayer() {
     const videoRef = useRef<HTMLVideoElement>(null);
-    const [isPlaying, setIsPlaying] = useState(true);
+    const [isPlaying, setIsPlaying] = useState(false);
     const [isMuted, setIsMuted] = useState(true);
+    const [videoError, setVideoError] = useState(false);
     const [progress, setProgress] = useState(0);
 
     const [currentQuiz, setCurrentQuiz] = useState<QuizItem | null>(null);
@@ -99,13 +100,24 @@ export function DemoVideoPlayer() {
     useEffect(() => {
         const video = videoRef.current;
         if (!video) return;
+
+        const onPlay = () => setIsPlaying(true);
+        const onPause = () => setIsPlaying(false);
+        const onError = () => setVideoError(true);
+
         video.addEventListener("timeupdate", handleTimeUpdate);
-        video.addEventListener("play", () => setIsPlaying(true));
-        video.addEventListener("pause", () => setIsPlaying(false));
+        video.addEventListener("play", onPlay);
+        video.addEventListener("pause", onPause);
+        video.addEventListener("error", onError);
+
+        // Attempt autoplay
+        video.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
+
         return () => {
             video.removeEventListener("timeupdate", handleTimeUpdate);
-            video.removeEventListener("play", () => setIsPlaying(true));
-            video.removeEventListener("pause", () => setIsPlaying(false));
+            video.removeEventListener("play", onPlay);
+            video.removeEventListener("pause", onPause);
+            video.removeEventListener("error", onError);
         };
     }, [handleTimeUpdate]);
 
@@ -144,10 +156,10 @@ export function DemoVideoPlayer() {
     const completedCount = completedQuizIds.size;
 
     return (
-        <div className="relative rounded-[2.5rem] p-3 sm:p-5 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] ring-1 ring-slate-200/60">
+        <div className="relative rounded-[2.5rem] p-3 sm:p-5 bg-white dark:bg-slate-900 shadow-[0_20px_50px_rgba(0,0,0,0.1)] ring-1 ring-slate-200/60 dark:ring-slate-700/60">
             {/* Header / Progress Info */}
             <div className="flex items-center justify-between px-2 mb-3">
-                <span className="text-xs font-medium text-slate-500">
+                <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
                     Quiz hoàn thành: {completedCount}/{totalQuizzes}
                 </span>
                 <div className="flex gap-1.5">
@@ -173,13 +185,22 @@ export function DemoVideoPlayer() {
             >
                 <video
                     ref={videoRef}
-                    src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                    src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"
                     className="w-full h-full object-cover"
-                    autoPlay
                     muted
                     playsInline
-                    poster="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200"
+                    loop
+                    poster="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80"
+                    onError={() => setVideoError(true)}
                 />
+                {/* Video error fallback overlay */}
+                {videoError && (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-teal-600 to-cyan-700 text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-4 opacity-80"><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" /></svg>
+                        <p className="text-lg font-semibold">Demo Video</p>
+                        <p className="text-sm opacity-70 mt-1">Quiz sẽ xuất hiện tại các mốc 5s, 10s, 15s</p>
+                    </div>
+                )}
 
                 {/* Custom Overlay Controls */}
                 <div className="absolute inset-0 bg-black/10 transition-opacity opacity-0 group-hover:opacity-100 flex flex-col justify-end p-4 pointer-events-none">

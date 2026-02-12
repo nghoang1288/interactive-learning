@@ -53,16 +53,16 @@ export default function LoginPage() {
                             Doctor Learning
                         </span>
                     </Link>
-                    <h2 className="mt-6 text-3xl font-extrabold text-slate-900 tracking-tight">Chào mừng trở lại!</h2>
-                    <p className="mt-2 text-sm text-slate-500">Đăng nhập để tiếp tục hành trình học tập Y khoa.</p>
+                    <h2 className="mt-6 text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Chào mừng trở lại!</h2>
+                    <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">Đăng nhập để tiếp tục hành trình học tập Y khoa.</p>
                 </div>
 
-                <Card className="border-0 shadow-2xl shadow-slate-200/60 ring-1 ring-slate-100 overflow-hidden">
-                    <CardHeader className="space-y-1 pb-6 pt-8 text-center bg-white">
+                <Card className="border-0 shadow-2xl shadow-slate-200/60 dark:shadow-slate-900/60 ring-1 ring-slate-100 dark:ring-slate-800 overflow-hidden">
+                    <CardHeader className="space-y-1 pb-6 pt-8 text-center bg-white dark:bg-slate-900">
                         <CardTitle className="text-2xl font-bold">Đăng nhập</CardTitle>
                         <CardDescription>Nhập thông tin tài khoản của bạn</CardDescription>
                     </CardHeader>
-                    <CardContent className="bg-white px-8 pb-8 pt-0">
+                    <CardContent className="bg-white dark:bg-slate-900 px-8 pb-8 pt-0">
                         {error && (
                             <div className="mb-6 p-4 rounded-xl bg-red-50 border border-red-100 flex items-start gap-3 text-red-700">
                                 <span className="mt-0.5">⚠️</span>
@@ -71,12 +71,12 @@ export default function LoginPage() {
                         )}
                         <form onSubmit={handleSubmit} method="POST" className="space-y-5">
                             <div className="space-y-2">
-                                <label htmlFor="email" className="text-sm font-bold text-slate-700 ml-1">Email</label>
+                                <label htmlFor="email" className="text-sm font-bold text-slate-700 dark:text-slate-200 ml-1">Email</label>
                                 <Input id="email" name="email" type="email" placeholder="name@hospital.com" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="h-12 rounded-xl" />
                             </div>
                             <div className="space-y-2">
                                 <div className="flex items-center justify-between ml-1">
-                                    <label htmlFor="password" className="text-sm font-bold text-slate-700">Mật khẩu</label>
+                                    <label htmlFor="password" className="text-sm font-bold text-slate-700 dark:text-slate-200">Mật khẩu</label>
                                     <Link href="#" className="text-xs font-semibold text-teal-600 hover:text-teal-500">Quên mật khẩu?</Link>
                                 </div>
                                 <Input id="password" name="password" type="password" placeholder="••••••••" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} required className="h-12 rounded-xl" />
@@ -86,7 +86,7 @@ export default function LoginPage() {
                             </Button>
                         </form>
                         <div className="mt-8 text-center">
-                            <p className="text-sm text-slate-500">
+                            <p className="text-sm text-slate-500 dark:text-slate-400">
                                 Chưa có tài khoản?{" "}
                                 <Link href="/register" className="font-bold text-teal-600 hover:text-teal-500 transition-colors">Đăng ký ngay</Link>
                             </p>
