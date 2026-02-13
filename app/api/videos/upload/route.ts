@@ -23,8 +23,8 @@ const R2_SECRET_ACCESS_KEY = process.env.R2_SECRET_ACCESS_KEY;
 const R2_BUCKET_NAME = process.env.R2_BUCKET_NAME;
 const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL;
 
-// Quota configuration (10GB)
-const R2_QUOTA_BYTES = 10 * 1024 * 1024 * 1024;
+// Quota configuration (9GB)
+const R2_QUOTA_BYTES = 9 * 1024 * 1024 * 1024;
 
 export async function POST(req: NextRequest) {
     try {
