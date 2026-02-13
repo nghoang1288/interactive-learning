@@ -149,6 +149,10 @@ export function VideoPlayer({
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
                 onEnded={onComplete}
+                onError={(e) => {
+                    console.error("Video Error:", e.currentTarget.error);
+                    alert(`Lỗi phát video: ${e.currentTarget.error?.message || "Không thể tải video"}`);
+                }}
                 playsInline
             />
 
