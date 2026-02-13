@@ -10,6 +10,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.989.0",
+    "@aws-sdk/lib-storage": "^3.989.0",
     "@prisma/client": "^6.0.0",
     "@radix-ui/react-slot": "^1.2.4",
     "@types/bcryptjs": "^2.4.6",

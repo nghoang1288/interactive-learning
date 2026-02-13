@@ -53,6 +53,8 @@ model Video {
   // Relations
   quizzes  Quiz[]
   progress Progress[]
+  size        Int       @default(0)
+  storage     String    @default("LOCAL") // "R2", "LOCAL", "YOUTUBE"
 }
 
 // ===== QUIZZES =====
