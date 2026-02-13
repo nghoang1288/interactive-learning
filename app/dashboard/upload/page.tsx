@@ -70,40 +70,74 @@ export default function UploadPage() {
         if (!file || !title) return;
 
         setIsUploading(true);
-        setProgress(10);
+        setProgress(0);
 
         try {
-            const simulateProgress = setInterval(() => {
-                setProgress((prev) => (prev < 90 ? prev + 5 : prev));
-            }, 500);
-
-            const safeTitle = Buffer.from(title, 'utf-8').toString('base64');
-            const safeDesc = Buffer.from(description || "", 'utf-8').toString('base64');
-            const safeName = Buffer.from(file.name, 'utf-8').toString('base64');
-
-            const res = await fetch("/api/videos/upload", {
+            // 1. Get Presigned URL
+            const initRes = await fetch("/api/videos/upload", {
                 method: "POST",
-                headers: {
-                    "Content-Type": file.type || "application/octet-stream",
-                    "X-Upload-Title": safeTitle,
-                    "X-Upload-Desc": safeDesc,
-                    "X-Upload-Filename": safeName,
-                },
-                body: file,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    filename: file.name,
+                    contentType: file.type,
+                    size: file.size
+                })
             });
 
-            clearInterval(simulateProgress);
-            setProgress(100);
-
-            if (!res.ok) {
-                const data = await res.json();
-                throw new Error(data.error || "Upload thất bại");
+            if (!initRes.ok) {
+                const errorData = await initRes.json();
+                throw new Error(errorData.error || "Không thể khởi tạo upload");
             }
 
-            const { video } = await res.json();
+            const { uploadUrl, publicUrl, storage } = await initRes.json();
+
+            // 2. Upload File to R2 (Directly) using XHR for progress
+            await new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open("PUT", uploadUrl);
+                xhr.setRequestHeader("Content-Type", file.type);
+
+                xhr.upload.onprogress = (event) => {
+                    if (event.lengthComputable) {
+                        const percentComplete = (event.loaded / event.total) * 100;
+                        setProgress(Math.round(percentComplete));
+                    }
+                };
+
+                xhr.onload = () => {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        resolve(xhr.response);
+                    } else {
+                        reject(new Error("Upload failed"));
+                    }
+                };
+
+                xhr.onerror = () => reject(new Error("Network Error"));
+                xhr.send(file);
+            });
+
+            // 3. Save Metadata
+            const completeRes = await fetch("/api/videos/complete", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    title,
+                    description,
+                    filename: file.name,
+                    publicUrl,
+                    size: file.size,
+                    storage
+                })
+            });
+
+            if (!completeRes.ok) throw new Error("Lỗi lưu thông tin video");
+
+            const { video } = await completeRes.json();
             router.push(`/dashboard/lessons/${video.id}`);
+
         } catch (err: any) {
-            setError(err.message);
+            console.error(err);
+            setError(err.message || "Upload thất bại. Nếu file lớn hãy thử lại hoặc dùng YouTube.");
             setIsUploading(false);
             setProgress(0);
         }
