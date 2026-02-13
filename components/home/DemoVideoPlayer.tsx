@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { cn, formatDuration } from "@/lib/utils";
-import { CheckCircle2, XCircle, RotateCcw } from "lucide-react";
+import { CheckCircle2, XCircle, RotateCcw, BrainCircuit } from "lucide-react";
 
 interface QuizItem {
     id: number;
@@ -14,32 +14,32 @@ interface QuizItem {
 const DEMO_QUIZZES: QuizItem[] = [
     {
         id: 1,
-        triggerTime: 5,
-        question: "Big Buck Bunny là phim hoạt hình về loài vật nào?",
+        triggerTime: 10,
+        question: "Hệ thống nào đang được hiển thị trong video?",
         options: [
-            { id: "1a", text: "🐰 Thỏ", isCorrect: true },
-            { id: "1b", text: "🦊 Cáo", isCorrect: false },
-            { id: "1c", text: "🐻 Gấu", isCorrect: false },
+            { id: "1a", text: "🦴 Hệ xương khớp", isCorrect: false },
+            { id: "1b", text: "🫀 Hệ tuần hoàn & Nội tạng", isCorrect: true },
+            { id: "1c", text: "🧠 Hệ thần kinh", isCorrect: false },
         ],
     },
     {
         id: 2,
-        triggerTime: 10,
-        question: "Bối cảnh chính của phim diễn ra ở đâu?",
+        triggerTime: 35,
+        question: "Cơ quan nào có vai trò lọc máu chính trong cơ thể?",
         options: [
-            { id: "2a", text: "🏙️ Thành phố", isCorrect: false },
-            { id: "2b", text: "🌲 Khu rừng", isCorrect: true },
-            { id: "2c", text: "🏖️ Bãi biển", isCorrect: false },
+            { id: "2a", text: "Gan", isCorrect: false },
+            { id: "2b", text: "Thận", isCorrect: true },
+            { id: "2c", text: "Tim", isCorrect: false },
         ],
     },
     {
         id: 3,
-        triggerTime: 15,
-        question: "Nhân vật phản diện trong phim là gì?",
+        triggerTime: 60,
+        question: "Máu giàu oxy được vận chuyển qua loại mạch nào?",
         options: [
-            { id: "3a", text: "🐿️ Sóc chuột", isCorrect: true },
-            { id: "3b", text: "🐺 Sói", isCorrect: false },
-            { id: "3c", text: "🦅 Đại bàng", isCorrect: false },
+            { id: "3a", text: "Động mạch", isCorrect: true },
+            { id: "3b", text: "Tĩnh mạch", isCorrect: false },
+            { id: "3c", text: "Mao mạch phổi", isCorrect: false },
         ],
     },
 ];
@@ -68,7 +68,7 @@ export function DemoVideoPlayer() {
         if (currentQuiz) return;
 
         for (const quiz of DEMO_QUIZZES) {
-            if (!completedQuizIds.has(quiz.id) && video.currentTime >= quiz.triggerTime) {
+            if (!completedQuizIds.has(quiz.id) && Math.abs(video.currentTime - quiz.triggerTime) < 0.5) {
                 video.pause();
                 setIsPlaying(false);
                 setCurrentQuiz(quiz);
@@ -159,20 +159,21 @@ export function DemoVideoPlayer() {
         <div className="relative rounded-[2.5rem] p-3 sm:p-5 bg-white dark:bg-slate-900 shadow-[0_20px_50px_rgba(0,0,0,0.1)] ring-1 ring-slate-200/60 dark:ring-slate-700/60">
             {/* Header / Progress Info */}
             <div className="flex items-center justify-between px-2 mb-3">
-                <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
-                    Quiz hoàn thành: {completedCount}/{totalQuizzes}
+                <span className="text-xs font-medium text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                    <BrainCircuit size={14} className="text-teal-600" />
+                    Quiz hoàn thành: <span className="text-slate-900 dark:text-white font-bold">{completedCount}/{totalQuizzes}</span>
                 </span>
                 <div className="flex gap-1.5">
                     {DEMO_QUIZZES.map((q, i) => (
                         <div
                             key={q.id}
                             className={cn(
-                                "h-2 w-8 rounded-full transition-colors",
+                                "h-2 w-8 rounded-full transition-all duration-300",
                                 completedQuizIds.has(q.id)
-                                    ? "bg-emerald-500"
+                                    ? "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]"
                                     : currentQuiz?.id === q.id
-                                        ? "bg-teal-500 animate-pulse"
-                                        : "bg-slate-200"
+                                        ? "bg-teal-500 animate-pulse scale-110"
+                                        : "bg-slate-200 dark:bg-slate-700"
                             )}
                         />
                     ))}
@@ -180,35 +181,40 @@ export function DemoVideoPlayer() {
             </div>
 
             <div
-                className="aspect-video relative rounded-[1.8rem] overflow-hidden bg-slate-900 shadow-inner group cursor-pointer"
+                className="aspect-video relative rounded-[1.8rem] overflow-hidden bg-slate-900 shadow-inner group cursor-pointer border border-slate-100 dark:border-slate-800"
                 onClick={togglePlay}
             >
                 <video
                     ref={videoRef}
-                    src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"
+                    // Medical animation video (Royalty Free from Pixabay)
+                    src="https://cdn.pixabay.com/video/2016/07/28/4058-176749056_large.mp4"
                     className="w-full h-full object-cover"
-                    muted
+                    muted={isMuted}
                     playsInline
                     loop
-                    poster="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80"
+                    // Medical poster
+                    poster="https://cdn.pixabay.com/photo/2018/07/15/10/44/dna-3539309_1280.jpg"
                     onError={() => setVideoError(true)}
                 />
+
                 {/* Video error fallback overlay */}
                 {videoError && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-teal-600 to-cyan-700 text-white">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-teal-600 to-cyan-700 text-white p-8 text-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-4 opacity-80"><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" /></svg>
-                        <p className="text-lg font-semibold">Demo Video</p>
-                        <p className="text-sm opacity-70 mt-1">Quiz sẽ xuất hiện tại các mốc 5s, 10s, 15s</p>
+                        <p className="text-xl font-bold mb-2">Demo Video Unavailable</p>
+                        <p className="text-sm opacity-80">Video source might be restricted in your region.<br />Reload page or try checking network connection.</p>
                     </div>
                 )}
 
                 {/* Custom Overlay Controls */}
-                <div className="absolute inset-0 bg-black/10 transition-opacity opacity-0 group-hover:opacity-100 flex flex-col justify-end p-4 pointer-events-none">
-                    <div className="w-full h-1 bg-white/30 rounded-full overflow-hidden mb-4">
-                        <div className="h-full bg-teal-500 transition-all duration-300" style={{ width: `${progress}%` }} />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-opacity opacity-0 group-hover:opacity-100 flex flex-col justify-end p-6 pointer-events-none">
+                    <div className="w-full h-1.5 bg-white/20 rounded-full overflow-hidden mb-4 backdrop-blur-sm">
+                        <div className="h-full bg-teal-500 transition-all duration-300 relative" style={{ width: `${progress}%` }}>
+                            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-lg scale-0 group-hover:scale-100 transition-transform" />
+                        </div>
                     </div>
                     <div className="flex justify-between items-center pointer-events-auto">
-                        <button onClick={(e) => { e.stopPropagation(); togglePlay(); }} className="h-10 w-10 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white transition-all">
+                        <button onClick={(e) => { e.stopPropagation(); togglePlay(); }} className="h-10 w-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md text-white transition-all ring-1 ring-white/20">
                             {isPlaying ? (
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="6" y="4" width="4" height="16" rx="1" /><rect x="14" y="4" width="4" height="16" rx="1" /></svg>
                             ) : (
@@ -218,11 +224,11 @@ export function DemoVideoPlayer() {
 
                         <div className="flex items-center gap-3">
                             {/* Time Display */}
-                            <div className="text-white font-medium text-xs bg-black/40 px-2 py-1 rounded backdrop-blur-sm">
+                            <div className="text-white font-mono font-medium text-xs bg-black/40 px-3 py-1.5 rounded-lg backdrop-blur-md border border-white/10">
                                 {videoRef.current ? formatDuration(videoRef.current.currentTime) : "0:00"} / {videoRef.current ? formatDuration(videoRef.current.duration) : "0:00"}
                             </div>
 
-                            <button onClick={toggleMute} className="h-8 w-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white transition-all">
+                            <button onClick={toggleMute} className="h-8 w-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md text-white transition-all ring-1 ring-white/20">
                                 {isMuted ? (
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" /><line x1="23" y1="9" x2="17" y2="15" /><line x1="17" y1="9" x2="23" y2="15" /></svg>
                                 ) : (
@@ -236,33 +242,37 @@ export function DemoVideoPlayer() {
                 {/* Big Play Button when paused */}
                 {!isPlaying && !currentQuiz && (
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                        <div className="h-16 w-16 flex items-center justify-center rounded-full bg-teal-600/90 text-white shadow-xl animate-in zoom-in-50">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" stroke="none" className="ml-1"><polygon points="5 3 19 12 5 21 5 3" /></svg>
+                        <div className="h-20 w-20 flex items-center justify-center rounded-full bg-teal-600/90 text-white shadow-2xl animate-in zoom-in-50 backdrop-blur-sm ring-4 ring-white/20">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="currentColor" stroke="none" className="ml-1"><polygon points="5 3 19 12 5 21 5 3" /></svg>
                         </div>
                     </div>
                 )}
 
                 {/* Quiz Overlay */}
-                {currentQuiz && (
-                    <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/60 backdrop-blur-sm cursor-default" onClick={(e) => e.stopPropagation()}>
-                        <div className="bg-white/95 backdrop-blur-md p-5 sm:p-8 rounded-2xl shadow-2xl border border-white/20 w-[90%] max-w-md animate-in zoom-in-95 duration-300">
+                <div className={cn(
+                    "absolute inset-0 z-20 flex items-center justify-center bg-slate-950/70 backdrop-blur-sm cursor-default transition-all duration-500",
+                    currentQuiz ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+                )} onClick={(e) => e.stopPropagation()}>
+                    {currentQuiz && (
+                        <div className="bg-white dark:bg-slate-900 p-6 sm:p-8 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-700 w-[90%] max-w-md animate-in zoom-in-95 slide-in-from-bottom-5 duration-300">
                             {/* Header */}
-                            <div className="flex items-center justify-between mb-3">
+                            <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="h-2 w-2 rounded-full bg-teal-600 animate-pulse" />
-                                    <span className="text-xs font-bold uppercase tracking-widest text-teal-600">
-                                        Quiz {quizNumber}/{totalQuizzes}
+                                    <div className="h-2.5 w-2.5 rounded-full bg-teal-600 animate-pulse ring-4 ring-teal-100 dark:ring-teal-900/30" />
+                                    <span className="text-xs font-bold uppercase tracking-widest text-teal-700 dark:text-teal-400">
+                                        Câu hỏi {quizNumber}/{totalQuizzes}
                                     </span>
                                 </div>
-                                <span className="text-xs text-slate-400 font-medium">
-                                    ⏱ {currentQuiz.triggerTime}s
+                                <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-md border border-slate-200 dark:border-slate-700">
+                                    ⏱ 00:{currentQuiz.triggerTime}
                                 </span>
                             </div>
-                            <h3 className="text-lg font-bold text-slate-900 mb-1">
+
+                            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 leading-tight">
                                 {currentQuiz.question}
                             </h3>
-                            <p className="text-sm text-slate-500 mb-5">
-                                Trả lời đúng để xem tiếp, sai sẽ xem lại!
+                            <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 font-medium">
+                                Trả lời đúng để tiếp tục xem bài giảng.
                             </p>
 
                             {/* Options */}
@@ -273,50 +283,69 @@ export function DemoVideoPlayer() {
                                         onClick={() => handleAnswer(option.id)}
                                         disabled={status !== "idle"}
                                         className={cn(
-                                            "w-full flex items-center gap-3 rounded-xl border-2 p-3.5 text-left font-medium transition-all",
-                                            "border-slate-200 bg-slate-50 hover:bg-white hover:border-teal-300",
-                                            selectedOption === option.id &&
-                                            status === "idle" &&
-                                            "border-teal-600 bg-teal-50 text-teal-700",
-                                            status === "correct" &&
-                                            option.isCorrect &&
-                                            "border-emerald-500 bg-emerald-50 text-emerald-700",
-                                            status === "incorrect" &&
-                                            selectedOption === option.id &&
-                                            !option.isCorrect &&
-                                            "border-red-500 bg-red-50 text-red-700",
-                                            status !== "idle" && "cursor-not-allowed opacity-70"
+                                            "w-full flex items-center gap-4 rounded-xl border-2 p-4 text-left font-medium transition-all group/opt",
+                                            // Default state (Light mode contrast fix: darker text, stronger border)
+                                            "border-slate-200 bg-slate-50 text-slate-700 hover:bg-white hover:border-teal-400 hover:text-teal-700 hover:shadow-md",
+                                            // Dark mode
+                                            "dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:border-teal-500 dark:hover:text-teal-300",
+
+                                            // Selected state
+                                            selectedOption === option.id && status === "idle" &&
+                                            "border-teal-600 bg-teal-50 text-teal-800 dark:border-teal-500 dark:bg-teal-900/20 dark:text-teal-300 shadow-inner",
+
+                                            // Correct state
+                                            status === "correct" && option.isCorrect &&
+                                            "border-emerald-500 bg-emerald-50 text-emerald-800 dark:border-emerald-500 dark:bg-emerald-900/20 dark:text-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.2)]",
+
+                                            // Incorrect state
+                                            status === "incorrect" && selectedOption === option.id && !option.isCorrect &&
+                                            "border-red-500 bg-red-50 text-red-800 dark:border-red-500 dark:bg-red-900/20 dark:text-red-300",
+
+                                            status !== "idle" && "cursor-not-allowed opacity-80"
                                         )}
                                     >
-                                        <span className="flex-1 text-sm sm:text-base">{option.text}</span>
+                                        <div className={cn(
+                                            "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 font-bold text-sm transition-colors",
+                                            selectedOption === option.id
+                                                ? "border-current bg-current text-white"
+                                                : "border-slate-300 text-slate-500 group-hover/opt:border-teal-400 group-hover/opt:text-teal-600 dark:border-slate-600 dark:text-slate-400"
+                                        )}>
+                                            {option.id.replace(/[0-9]/g, '').toUpperCase()}
+                                        </div>
+                                        <span className="flex-1 text-sm sm:text-base font-semibold">{option.text}</span>
+
                                         {status === "correct" && option.isCorrect && (
-                                            <CheckCircle2 size={20} className="text-emerald-500" />
+                                            <CheckCircle2 size={24} className="text-emerald-500 animate-in zoom-in spin-in-90" />
                                         )}
-                                        {status === "incorrect" &&
-                                            selectedOption === option.id &&
-                                            !option.isCorrect && (
-                                                <XCircle size={20} className="text-red-500" />
-                                            )}
+                                        {status === "incorrect" && selectedOption === option.id && !option.isCorrect && (
+                                            <XCircle size={24} className="text-red-500 animate-in zoom-in shake" />
+                                        )}
                                     </button>
                                 ))}
                             </div>
 
                             {/* Feedback */}
-                            {status === "correct" && (
-                                <div className="mt-4 text-center text-emerald-600 font-bold text-sm">
-                                    ✅ Chính xác! Đang tiếp tục phát video...
-                                </div>
-                            )}
-                            {status === "incorrect" && (
-                                <div className="mt-4 text-center text-red-600 font-bold text-sm flex items-center justify-center gap-2">
-                                    <RotateCcw size={16} className="animate-spin" />
-                                    Sai rồi! Đang tua lại...
-                                </div>
-                            )}
+                            <div className="h-8 mt-4 flex items-center justify-center">
+                                {status === "correct" && (
+                                    <div className="text-emerald-600 dark:text-emerald-400 font-bold text-sm bg-emerald-50 dark:bg-emerald-900/20 px-4 py-1.5 rounded-full animate-in slide-in-from-bottom-2 fade-in">
+                                        🎉 Chính xác! Đang tiếp tục phát...
+                                    </div>
+                                )}
+                                {status === "incorrect" && (
+                                    <div className="text-red-600 dark:text-red-400 font-bold text-sm flex items-center justify-center gap-2 bg-red-50 dark:bg-red-900/20 px-4 py-1.5 rounded-full animate-in slide-in-from-bottom-2 fade-in">
+                                        <RotateCcw size={14} className="animate-spin" />
+                                        Sai rồi! Đang tua lại 1 đoạn...
+                                    </div>
+                                )}
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
+
+            <p className="mt-4 text-center text-sm font-medium text-slate-500 dark:text-slate-400">
+                💡 <span className="hidden sm:inline">Mẹo: </span> Đây là video demo. Trong thực tế, bạn có thể thêm Quiz tại bất kỳ giây nào của video.
+            </p>
         </div>
     );
 }
