@@ -5,19 +5,19 @@ import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 
 const buttonVariants = cva(
-    "neo-button inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-bold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+    "inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-bold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
     {
         variants: {
             variant: {
-                default: "neo-button-primary bg-primary text-primary-foreground hover:bg-primary/90",
+                default: "neo-button neo-button-primary bg-primary text-primary-foreground hover:bg-primary/90",
                 destructive:
-                    "bg-red-500 text-white border-red-700 shadow-[4px_4px_0px_0px_#b91c1c] hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[5px_5px_0px_0px_#b91c1c] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_#b91c1c]",
+                    "neo-button bg-red-500 text-white border-red-700 shadow-[4px_4px_0px_0px_#b91c1c] hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[5px_5px_0px_0px_#b91c1c] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_#b91c1c]",
                 outline:
-                    "bg-white border-2 border-slate-900 shadow-[4px_4px_0px_0px_#0f172a] hover:bg-slate-100/50 hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[5px_5px_0px_0px_#0f172a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_#0f172a]",
+                    "neo-button bg-white border-2 border-slate-900 shadow-[4px_4px_0px_0px_#0f172a] hover:bg-slate-100/50 hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[5px_5px_0px_0px_#0f172a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_#0f172a]",
                 secondary:
-                    "bg-secondary text-secondary-foreground hover:bg-secondary/80 border-secondary-foreground/20 shadow-none",
-                ghost: "border-transparent shadow-none hover:bg-accent hover:text-accent-foreground active:translate-y-0 active:shadow-none",
-                link: "text-primary underline-offset-4 hover:underline shadow-none border-none p-0 h-auto",
+                    "neo-button bg-secondary text-secondary-foreground hover:bg-secondary/80 border-secondary-foreground/20 shadow-none",
+                ghost: "hover:bg-accent hover:text-accent-foreground active:scale-95 transition-transform",
+                link: "text-primary underline-offset-4 hover:underline",
                 neobrutalism: "neo-button bg-accent-cyan text-slate-900 border-slate-900 shadow-[4px_4px_0px_0px_#0f172a]",
             },
             size: {

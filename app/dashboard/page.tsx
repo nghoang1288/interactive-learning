@@ -189,7 +189,7 @@ export default function DashboardPage() {
 
                 <div className="space-y-6">
                     {/* Daily challenge card */}
-                    <Card className="border-0 bg-teal-600 text-white shadow-xl shadow-teal-100/50 overflow-hidden relative">
+                    <Card className="border-0 !bg-teal-600 text-white shadow-xl shadow-teal-100/50 overflow-hidden relative">
                         <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-white/10 blur-3xl" />
                         <CardHeader>
                             <CardTitle className="text-white flex items-center gap-2">
