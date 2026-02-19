@@ -61,8 +61,8 @@ export default function LessonsPage() {
         <div className="space-y-8 pb-12">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
                 <div className="space-y-1">
-                    <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Khám phá bài học</h1>
-                    <p className="text-slate-600 dark:text-slate-400">Tìm kiếm và chọn bài giảng video có Quiz tương tác để bắt đầu học.</p>
+                    <h1 className="text-3xl font-bold tracking-tight text-slate-900">Khám phá bài học</h1>
+                    <p className="text-slate-600">Tìm kiếm và chọn bài giảng video có Quiz tương tác để bắt đầu học.</p>
                 </div>
             </div>
 
@@ -71,7 +71,7 @@ export default function LessonsPage() {
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                     <Input
                         placeholder="Tìm theo tên bài học hoặc chủ đề..."
-                        className="pl-10 h-12 rounded-xl border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 dark:text-white dark:placeholder:text-slate-500"
+                        className="pl-10 h-12 rounded-xl border-slate-200 bg-white"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -142,7 +142,7 @@ export default function LessonsPage() {
                                 </div>
                                 <CardHeader className="space-y-3">
                                     <div className="flex items-center gap-2">
-                                        <Badge variant="primary" className="bg-teal-50 text-teal-600 border-0">
+                                        <Badge variant="secondary" className="bg-teal-50 text-teal-600 border-0">
                                             {lesson._count.quizzes} Quizzes
                                         </Badge>
                                     </div>
@@ -151,7 +151,7 @@ export default function LessonsPage() {
                                     </CardTitle>
                                 </CardHeader>
                                 <CardFooter className="pt-0 flex flex-col items-start gap-4">
-                                    <p className="text-sm text-slate-600 line-clamp-2 leading-relaxed dark:text-slate-400">
+                                    <p className="text-sm text-slate-600 line-clamp-2 leading-relaxed">
                                         {lesson.description || "Tìm hiểu thêm qua bài giảng video tương tác này."}
                                     </p>
                                     <div className="flex w-full items-center justify-between border-t border-slate-100 pt-4">
@@ -159,7 +159,7 @@ export default function LessonsPage() {
                                             <div className="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 ring-1 ring-slate-200">
                                                 <User size={14} />
                                             </div>
-                                            <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">{lesson.author?.name || "Ẩn danh"}</span>
+                                            <span className="text-xs font-semibold text-slate-700">{lesson.author?.name || "Ẩn danh"}</span>
                                         </div>
                                         <span className="text-[10px] uppercase tracking-widest text-slate-400 font-bold">
                                             Xem ngay

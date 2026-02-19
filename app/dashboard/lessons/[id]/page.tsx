@@ -155,9 +155,9 @@ export default function LessonDetailPage() {
 
     if (!lesson) return (
         <div className="flex flex-col items-center justify-center h-[80vh] text-center px-4">
-            <div className="h-20 w-20 bg-slate-100 rounded-full flex items-center justify-center text-slate-400 mb-6 font-bold text-3xl dark:bg-slate-800 dark:text-slate-500">!</div>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Không tìm thấy bài học</h2>
-            <p className="text-slate-500 mt-2 max-w-sm dark:text-slate-400">Có lỗi xảy ra. Vui lòng quay lại danh sách.</p>
+            <div className="h-20 w-20 bg-slate-100 rounded-full flex items-center justify-center text-slate-400 mb-6 font-bold text-3xl">!</div>
+            <h2 className="text-2xl font-bold text-slate-900">Không tìm thấy bài học</h2>
+            <p className="text-slate-500 mt-2 max-w-sm">Có lỗi xảy ra. Vui lòng quay lại danh sách.</p>
             <Button asChild className="mt-6 rounded-xl h-11 px-8 bg-teal-600 hover:bg-teal-700"><Link href="/dashboard/lessons">Quay lại</Link></Button>
         </div>
     );
@@ -167,10 +167,10 @@ export default function LessonDetailPage() {
             <div className="flex items-center gap-4">
                 <Button asChild variant="ghost" size="icon" className="rounded-full h-10 w-10"><Link href="/dashboard/lessons"><ArrowLeft size={20} /></Link></Button>
                 <div className="flex flex-col">
-                    <h1 className="text-2xl font-bold text-slate-900 line-clamp-1 dark:text-white">{lesson.title}</h1>
-                    <div className="flex items-center gap-3 text-xs font-semibold text-slate-600 uppercase tracking-widest mt-1 dark:text-slate-400">
+                    <h1 className="text-2xl font-bold text-slate-900 line-clamp-1">{lesson.title}</h1>
+                    <div className="flex items-center gap-3 text-xs font-semibold text-slate-600 uppercase tracking-widest mt-1">
                         <span className="flex items-center gap-1.5"><User size={12} /> {lesson.author?.name || "Ẩn danh"}</span>
-                        <span className="h-1 w-1 rounded-full bg-slate-300 dark:bg-slate-600" />
+                        <span className="h-1 w-1 rounded-full bg-slate-300" />
                         <span className="flex items-center gap-1.5"><Clock size={12} /> {formatDate(lesson.createdAt)}</span>
                     </div>
                 </div>
@@ -182,14 +182,14 @@ export default function LessonDetailPage() {
                     ) : (
                         <VideoPlayer url={lesson.url} videoId={lesson.id} quizzes={lesson.quizzes} initialTime={progress?.currentTime || 0} onProgressUpdate={handleProgressUpdate} onComplete={handleComplete} isCompleted={isCompleted} />
                     )}
-                    <Card className="border-0 shadow-sm ring-1 ring-slate-100 dark:ring-slate-800">
+                    <Card className="border-0 shadow-sm ring-1 ring-slate-100">
                         <CardHeader><CardTitle>Mô tả bài học</CardTitle></CardHeader>
-                        <CardContent><p className="text-slate-700 leading-relaxed whitespace-pre-wrap dark:text-slate-300">{lesson.description || "Chưa có mô tả."}</p></CardContent>
+                        <CardContent><p className="text-slate-700 leading-relaxed whitespace-pre-wrap">{lesson.description || "Chưa có mô tả."}</p></CardContent>
                     </Card>
                 </div>
                 <div className="space-y-6">
-                    <Card className="overflow-hidden border-0 shadow-xl ring-1 ring-slate-100 dark:ring-slate-800">
-                        <CardHeader className="bg-slate-50/50 dark:bg-slate-900/50">
+                    <Card className="overflow-hidden border-0 shadow-xl ring-1 ring-slate-100">
+                        <CardHeader className="bg-slate-50/50">
                             <div className="flex items-center gap-2">
                                 <div className="h-8 w-8 flex items-center justify-center rounded-lg bg-teal-100 text-teal-600 shadow-sm"><BookOpen size={18} /></div>
                                 <CardTitle className="text-lg">Danh sách Quiz</CardTitle>
@@ -198,17 +198,17 @@ export default function LessonDetailPage() {
                         </CardHeader>
                         <CardContent className="p-0">
                             {isAuthor && !isEditing && (
-                                <div className="p-4 border-b border-slate-100 dark:border-slate-800">
-                                    <Button onClick={handleAddQuiz} className="w-full bg-teal-50 text-teal-700 hover:bg-teal-100 border border-teal-200 dark:bg-teal-900/20 dark:text-teal-400 dark:border-teal-800">
+                                <div className="p-4 border-b border-slate-100">
+                                    <Button onClick={handleAddQuiz} className="w-full bg-teal-50 text-teal-700 hover:bg-teal-100 border border-teal-200">
                                         <Plus size={16} className="mr-2" /> Thêm Quiz tại {Math.floor(progress?.currentTime || 0)}s
                                     </Button>
                                 </div>
                             )}
 
                             {isEditing && (
-                                <div className="p-6 bg-slate-50 border-b border-slate-200 space-y-4 dark:bg-slate-900/50 dark:border-slate-800">
+                                <div className="p-6 bg-slate-50 border-b border-slate-200 space-y-4">
                                     <div className="flex justify-between items-center">
-                                        <h4 className="font-bold text-slate-900 dark:text-white">{isEditing === "new" ? "Thêm Quiz Mới" : "Chỉnh Sửa Quiz"}</h4>
+                                        <h4 className="font-bold text-slate-900">{isEditing === "new" ? "Thêm Quiz Mới" : "Chỉnh Sửa Quiz"}</h4>
                                         <Button variant="ghost" size="sm" onClick={handleCancelEdit}><X size={16} /></Button>
                                     </div>
                                     <div className="grid gap-4">
@@ -261,24 +261,24 @@ export default function LessonDetailPage() {
                                 </div>
                             )}
 
-                            <div className="divide-y divide-slate-50 dark:divide-slate-800">
+                            <div className="divide-y divide-slate-50">
                                 {lesson.quizzes.length === 0 ? (
-                                    <div className="p-8 text-center text-sm text-slate-500 dark:text-slate-400">Không có Quiz.</div>
+                                    <div className="p-8 text-center text-sm text-slate-500">Không có Quiz.</div>
                                 ) : lesson.quizzes.map((quiz, idx) => (
-                                    <div key={quiz.id} className="flex items-center justify-between p-4 group hover:bg-slate-50/50 transition-colors dark:hover:bg-slate-900/30">
+                                    <div key={quiz.id} className="flex items-center justify-between p-4 group hover:bg-slate-50/50 transition-colors">
                                         <div className="flex items-center gap-3 overflow-hidden">
-                                            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-600 group-hover:bg-teal-100 group-hover:text-teal-600 dark:bg-slate-800 dark:text-slate-300 dark:group-hover:text-teal-400">{idx + 1}</div>
+                                            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-600 group-hover:bg-teal-100 group-hover:text-teal-600">{idx + 1}</div>
                                             <div className="min-w-0">
-                                                <p className="text-sm font-bold text-slate-900 line-clamp-1 dark:text-white">{quiz.question}</p>
-                                                <p className="text-[10px] font-medium text-slate-500 uppercase tracking-widest mt-0.5 dark:text-slate-400">Tại {quiz.timestamp.toFixed(0)}s • {quiz.options.length} lựa chọn</p>
+                                                <p className="text-sm font-bold text-slate-900 line-clamp-1">{quiz.question}</p>
+                                                <p className="text-[10px] font-medium text-slate-500 uppercase tracking-widest mt-0.5">Tại {quiz.timestamp.toFixed(0)}s • {quiz.options.length} lựa chọn</p>
                                             </div>
                                         </div>
                                         {isAuthor && (
                                             <div className="flex items-center gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
-                                                <Button size="icon" variant="ghost" className="h-8 w-8 text-slate-400 hover:text-teal-600 dark:text-slate-500 dark:hover:text-teal-400" onClick={() => handleEditQuiz(quiz)}>
+                                                <Button size="icon" variant="ghost" className="h-8 w-8 text-slate-400 hover:text-teal-600" onClick={() => handleEditQuiz(quiz)}>
                                                     <Edit size={14} />
                                                 </Button>
-                                                <Button size="icon" variant="ghost" className="h-8 w-8 text-slate-400 hover:text-red-500 dark:text-slate-500 dark:hover:text-red-400" onClick={() => handleDeleteQuiz(quiz.id)}>
+                                                <Button size="icon" variant="ghost" className="h-8 w-8 text-slate-400 hover:text-red-500" onClick={() => handleDeleteQuiz(quiz.id)}>
                                                     <Trash2 size={14} />
                                                 </Button>
                                             </div>

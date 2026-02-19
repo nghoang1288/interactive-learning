@@ -435,13 +435,13 @@ export default function UploadPage() {
                                 </>
                             ) : (
                                 <>
-                                    <li className="flex items-center gap-2 text-xs text-teal-700 dark:text-teal-400">
+                                    <li className="flex items-center gap-2 text-xs text-teal-700">
                                         <div className="h-1.5 w-1.5 rounded-full bg-teal-400" /> MP4 là định dạng tốt nhất
                                     </li>
-                                    <li className="flex items-center gap-2 text-xs text-teal-700 dark:text-teal-400">
+                                    <li className="flex items-center gap-2 text-xs text-teal-700">
                                         <div className="h-1.5 w-1.5 rounded-full bg-teal-400" /> Tỷ lệ khung hình 16:9
                                     </li>
-                                    <li className="flex items-center gap-2 text-xs text-teal-700 dark:text-teal-400">
+                                    <li className="flex items-center gap-2 text-xs text-teal-700">
                                         <div className="h-1.5 w-1.5 rounded-full bg-teal-400" /> Độ phân giải HD (720p/1080p)
                                     </li>
                                 </>

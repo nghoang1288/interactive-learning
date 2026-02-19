@@ -39,8 +39,8 @@ export default function ProgressPage() {
                     <History size={24} />
                 </div>
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Tiến trình học tập</h1>
-                    <p className="text-slate-500 dark:text-slate-400">Xem lại các bài giảng bạn đã học và tiếp tục nơi bạn đã dừng.</p>
+                    <h1 className="text-3xl font-bold tracking-tight text-slate-900">Tiến trình học tập</h1>
+                    <p className="text-slate-500">Xem lại các bài giảng bạn đã học và tiếp tục nơi bạn đã dừng.</p>
                 </div>
             </div>
 
@@ -52,8 +52,8 @@ export default function ProgressPage() {
                 ) : progresses.length === 0 ? (
                     <Card className="flex flex-col items-center justify-center py-16 px-4 text-center border-dashed border-2">
                         <div className="h-20 w-20 bg-slate-100 rounded-full flex items-center justify-center text-slate-300 mb-6"><PlayCircle size={40} /></div>
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white">Chưa có lịch sử học tập</h3>
-                        <p className="text-sm text-slate-500 max-w-xs mt-2 dark:text-slate-400">Hãy bắt đầu buổi học đầu tiên ngay hôm nay!</p>
+                        <h3 className="text-xl font-bold text-slate-900">Chưa có lịch sử học tập</h3>
+                        <p className="text-sm text-slate-500 max-w-xs mt-2">Hãy bắt đầu buổi học đầu tiên ngay hôm nay!</p>
                         <Button asChild className="mt-6 rounded-xl px-8 shadow-lg shadow-teal-100 bg-teal-600 hover:bg-teal-700">
                             <Link href="/dashboard/lessons">Khám phá bài học ngay</Link>
                         </Button>
@@ -74,14 +74,14 @@ export default function ProgressPage() {
                                     <div className="flex-1 space-y-4">
                                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                                             <div>
-                                                <h3 className="text-xl font-bold text-slate-900 group-hover:text-teal-600 transition-colors leading-tight dark:text-white dark:group-hover:text-teal-400">{item.video.title}</h3>
-                                                <div className="flex items-center gap-3 mt-2 text-xs font-medium text-slate-500 uppercase tracking-wider dark:text-slate-400">
+                                                <h3 className="text-xl font-bold text-slate-900 group-hover:text-teal-600 transition-colors leading-tight">{item.video.title}</h3>
+                                                <div className="flex items-center gap-3 mt-2 text-xs font-medium text-slate-500 uppercase tracking-wider">
                                                     <span className="flex items-center gap-1.5"><User size={12} /> {item.video.author?.name || "Ẩn danh"}</span>
                                                     <span className="h-1 w-1 rounded-full bg-slate-300" />
                                                     <span className="flex items-center gap-1.5"><Activity size={12} /> {formatDate(item.updatedAt)}</span>
                                                 </div>
                                             </div>
-                                            <Button asChild variant={item.completed ? "outline" : "primary"} className="rounded-xl px-5 h-11 shrink-0">
+                                            <Button asChild variant={item.completed ? "outline" : "default"} className="rounded-xl px-5 h-11 shrink-0">
                                                 <Link href={`/dashboard/lessons/${item.videoId}`}>
                                                     {item.completed ? "Học lại" : "Tiếp tục học"} <ChevronRight size={16} className="ml-1.5" />
                                                 </Link>
