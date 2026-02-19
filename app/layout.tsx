@@ -1,13 +1,20 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { Lexend, Be_Vietnam_Pro } from "next/font/google"; // Neobrutalism fonts with Vietnamese support
+
 import AuthProvider from "@/components/providers/AuthProvider";
 import { AppLayout } from "@/components/layout/AppLayout";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
+const lexend = Lexend({
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-heading",
+  display: "swap",
+});
+
+const beVietnamPro = Be_Vietnam_Pro({
+  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-body",
   display: "swap",
 });
 
@@ -26,18 +33,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi" className={`${inter.variable}`}>
+    <html lang="vi" className={`${lexend.variable} ${beVietnamPro.variable}`}>
       <body className="antialiased" suppressHydrationWarning>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <AuthProvider>
-            <AppLayout>{children}</AppLayout>
-          </AuthProvider>
-        </ThemeProvider>
+        <AuthProvider>
+          <AppLayout>{children}</AppLayout>
+        </AuthProvider>
       </body>
     </html>
   );

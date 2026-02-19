@@ -184,18 +184,18 @@ export default function UploadPage() {
                         <ArrowLeft size={20} />
                     </Link>
                 </Button>
-                <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Thêm Bài giảng</h1>
+                <h1 className="text-3xl font-bold tracking-tight text-slate-900">Thêm Bài giảng</h1>
             </div>
 
             {/* Mode Tabs */}
-            <div className="flex gap-2 p-1 bg-slate-200 dark:bg-slate-800 rounded-xl w-fit">
+            <div className="flex gap-2 p-1 bg-slate-200 rounded-xl w-fit">
                 <button
                     onClick={() => { setMode("youtube"); setError(null); }}
                     className={cn(
                         "flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all",
                         mode === "youtube"
-                            ? "bg-white dark:bg-slate-700 text-red-600 shadow-sm"
-                            : "text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
+                            ? "bg-white text-red-600 shadow-sm"
+                            : "text-slate-600 hover:text-slate-800"
                     )}
                 >
                     <Youtube size={18} /> YouTube Link
@@ -205,8 +205,8 @@ export default function UploadPage() {
                     className={cn(
                         "flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all",
                         mode === "file"
-                            ? "bg-white dark:bg-slate-700 text-teal-600 shadow-sm"
-                            : "text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
+                            ? "bg-white text-teal-600 shadow-sm"
+                            : "text-slate-600 hover:text-slate-800"
                     )}
                 >
                     <Upload size={18} /> Upload File
@@ -216,9 +216,9 @@ export default function UploadPage() {
             <div className="grid gap-6 lg:grid-cols-3">
                 <div className="lg:col-span-2">
                     <Card className="overflow-hidden">
-                        <CardHeader className="bg-slate-50/50 border-b border-slate-100 dark:bg-slate-900/50 dark:border-slate-800">
-                            <CardTitle className="text-slate-900 dark:text-white">{mode === "youtube" ? "Thêm video từ YouTube" : "Upload video"}</CardTitle>
-                            <CardDescription className="dark:text-slate-400">
+                        <CardHeader className="bg-slate-50/50 border-b border-slate-100">
+                            <CardTitle className="text-slate-900">{mode === "youtube" ? "Thêm video từ YouTube" : "Upload video"}</CardTitle>
+                            <CardDescription>
                                 {mode === "youtube"
                                     ? "Dán link YouTube để tạo bài giảng — không cần upload file."
                                     : "Nhập tiêu đề và mô tả để mọi người dễ dàng tìm thấy bài giảng của bạn."}
@@ -229,7 +229,7 @@ export default function UploadPage() {
                                 {/* YouTube URL field */}
                                 {mode === "youtube" && (
                                     <div className="space-y-2">
-                                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Link YouTube *</label>
+                                        <label className="text-sm font-semibold text-slate-700">Link YouTube *</label>
                                         <div className="relative">
                                             <Link2 className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                                             <Input
@@ -242,7 +242,7 @@ export default function UploadPage() {
                                         </div>
                                         {/* YouTube Preview */}
                                         {youtubePreview && (
-                                            <div className="relative mt-3 overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700">
+                                            <div className="relative mt-3 overflow-hidden rounded-xl border border-slate-200">
                                                 <img
                                                     src={youtubePreview}
                                                     alt="YouTube preview"
@@ -260,7 +260,7 @@ export default function UploadPage() {
                                 )}
 
                                 <div className="space-y-2">
-                                    <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Tiêu đề bài giảng *</label>
+                                    <label className="text-sm font-semibold text-slate-700">Tiêu đề bài giảng *</label>
                                     <Input
                                         placeholder="VD: Hướng dẫn đọc X-Quang ngực cơ bản"
                                         value={title}
@@ -269,9 +269,9 @@ export default function UploadPage() {
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Mô tả chi tiết</label>
+                                    <label className="text-sm font-semibold text-slate-700">Mô tả chi tiết</label>
                                     <textarea
-                                        className="flex min-h-[120px] w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm placeholder:text-slate-500 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-teal-500 transition-all dark:bg-slate-900 dark:border-slate-800 dark:text-white dark:placeholder:text-slate-500"
+                                        className="flex min-h-[120px] w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm placeholder:text-slate-500 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-teal-500 transition-all"
                                         placeholder="Người học sẽ biết thêm gì từ video này?"
                                         value={description}
                                         onChange={(e) => setDescription(e.target.value)}
@@ -281,19 +281,19 @@ export default function UploadPage() {
                                 {/* File upload zone - only for file mode */}
                                 {mode === "file" && (
                                     <div className="pt-4">
-                                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">File Video *</label>
+                                        <label className="text-sm font-semibold text-slate-700">File Video *</label>
                                         <div className={cn(
-                                            "mt-2 flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 p-8 transition-all hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900/50",
-                                            file && "border-teal-200 bg-teal-50/20 dark:border-teal-800"
+                                            "mt-2 flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 p-8 transition-all hover:bg-slate-50",
+                                            file && "border-teal-200 bg-teal-50/20"
                                         )}>
                                             {!file ? (
                                                 <div className="text-center relative">
-                                                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-teal-100 text-teal-600 dark:bg-teal-900/30">
+                                                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-teal-100 text-teal-600">
                                                         <Upload size={32} />
                                                     </div>
                                                     <div className="mt-4 flex flex-col gap-1">
-                                                        <p className="text-sm font-bold text-slate-900 dark:text-white">Click để upload hoặc kéo thả</p>
-                                                        <p className="text-xs text-slate-500 dark:text-slate-400">MP4, WebM hoặc MOV (Tối đa 500MB)</p>
+                                                        <p className="text-sm font-bold text-slate-900">Click để upload hoặc kéo thả</p>
+                                                        <p className="text-xs text-slate-500">MP4, WebM hoặc MOV (Tối đa 500MB)</p>
                                                     </div>
                                                     <input
                                                         type="file"
@@ -306,12 +306,12 @@ export default function UploadPage() {
                                             ) : (
                                                 <div className="flex w-full items-center justify-between">
                                                     <div className="flex items-center gap-4">
-                                                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-teal-600 text-white shadow-lg shadow-teal-100 dark:shadow-none">
+                                                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-teal-600 text-white shadow-lg shadow-teal-100">
                                                             <FileVideo size={24} />
                                                         </div>
                                                         <div className="text-left">
-                                                            <p className="text-sm font-bold text-slate-900 truncate max-w-[200px] dark:text-white">{file.name}</p>
-                                                            <p className="text-xs text-slate-500 dark:text-slate-400">{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+                                                            <p className="text-sm font-bold text-slate-900 truncate max-w-[200px]">{file.name}</p>
+                                                            <p className="text-xs text-slate-500">{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
                                                         </div>
                                                     </div>
                                                     <Button
@@ -330,21 +330,21 @@ export default function UploadPage() {
                                 )}
 
                                 {error && (
-                                    <div className="flex items-start gap-3 rounded-lg bg-red-50 p-3 text-red-700 dark:bg-red-900/20 dark:text-red-400">
+                                    <div className="flex items-start gap-3 rounded-lg bg-red-50 p-3 text-red-700">
                                         <AlertCircle size={18} className="mt-0.5 shrink-0" />
                                         <p className="text-sm font-medium">{error}</p>
                                     </div>
                                 )}
                             </CardContent>
-                            <CardFooter className="border-t border-slate-100 bg-slate-50/30 px-6 py-4 dark:bg-slate-900/30 dark:border-slate-800">
+                            <CardFooter className="border-t border-slate-100 bg-slate-50/30 px-6 py-4">
                                 <div className="flex w-full flex-col gap-4">
                                     {isUploading && mode === "file" && (
                                         <div className="space-y-2">
-                                            <div className="flex justify-between text-xs font-semibold text-slate-600 dark:text-slate-400">
+                                            <div className="flex justify-between text-xs font-semibold text-slate-600">
                                                 <span>Đang tải lên...</span>
                                                 <span>{progress}%</span>
                                             </div>
-                                            <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
+                                            <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200">
                                                 <div
                                                     className="h-full bg-teal-600 transition-all duration-300"
                                                     style={{ width: `${progress}%` }}
@@ -388,48 +388,48 @@ export default function UploadPage() {
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="flex gap-4">
-                                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+                                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-700">
                                     <span className="text-sm font-bold">1</span>
                                 </div>
-                                <p className="text-xs text-slate-700 leading-relaxed dark:text-slate-400">
+                                <p className="text-xs text-slate-700 leading-relaxed">
                                     {mode === "youtube"
                                         ? "Dán link YouTube rồi đặt tiêu đề hay — không cần upload file nặng."
                                         : "Sử dụng tiêu đề rõ ràng để mọi người dễ dàng tìm thấy bài giảng."}
                                 </p>
                             </div>
                             <div className="flex gap-4">
-                                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
+                                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
                                     <span className="text-sm font-bold">2</span>
                                 </div>
-                                <p className="text-xs text-slate-700 leading-relaxed dark:text-slate-400">
+                                <p className="text-xs text-slate-700 leading-relaxed">
                                     Sau khi thêm, bạn có thể thêm các câu hỏi trắc nghiệm (Quiz) tại bất kỳ mốc thời gian nào.
                                 </p>
                             </div>
                             <div className="flex gap-4">
-                                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
                                     <span className="text-sm font-bold">3</span>
                                 </div>
-                                <p className="text-xs text-slate-700 leading-relaxed dark:text-slate-400">
+                                <p className="text-xs text-slate-700 leading-relaxed">
                                     Video có Quiz giúp người xem tập trung hơn gấp 3 lần!
                                 </p>
                             </div>
                         </CardContent>
                     </Card>
 
-                    <div className="rounded-2xl bg-teal-50 p-6 border border-teal-100 dark:bg-teal-900/10 dark:border-teal-900/30">
-                        <h4 className="font-bold text-teal-900 flex items-center gap-2 dark:text-teal-400">
+                    <div className="rounded-2xl bg-teal-50 p-6 border border-teal-100">
+                        <h4 className="font-bold text-teal-900 flex items-center gap-2">
                             <CheckCircle2 size={18} /> {mode === "youtube" ? "Hỗ trợ" : "Định dạng hỗ trợ"}
                         </h4>
                         <ul className="mt-4 space-y-2">
                             {mode === "youtube" ? (
                                 <>
-                                    <li className="flex items-center gap-2 text-xs text-teal-700 dark:text-teal-400">
+                                    <li className="flex items-center gap-2 text-xs text-teal-700">
                                         <div className="h-1.5 w-1.5 rounded-full bg-teal-400" /> youtube.com/watch?v=...
                                     </li>
-                                    <li className="flex items-center gap-2 text-xs text-teal-700 dark:text-teal-400">
+                                    <li className="flex items-center gap-2 text-xs text-teal-700">
                                         <div className="h-1.5 w-1.5 rounded-full bg-teal-400" /> youtu.be/...
                                     </li>
-                                    <li className="flex items-center gap-2 text-xs text-teal-700 dark:text-teal-400">
+                                    <li className="flex items-center gap-2 text-xs text-teal-700">
                                         <div className="h-1.5 w-1.5 rounded-full bg-teal-400" /> youtube.com/embed/...
                                     </li>
                                 </>

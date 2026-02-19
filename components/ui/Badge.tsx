@@ -1,30 +1,38 @@
 import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
-export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
-    variant?: "primary" | "secondary" | "success" | "warning" | "danger" | "outline";
-}
+const badgeVariants = cva(
+    "neo-badge inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+    {
+        variants: {
+            variant: {
+                default:
+                    "border-transparent bg-primary text-primary-foreground hover:bg-primary/80 shadow-[2px_2px_0px_0px_#1e3a8a]",
+                secondary:
+                    "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
+                destructive:
+                    "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
+                outline: "text-foreground",
+                neobrutalism: "bg-accent-pink text-slate-900 border-slate-900 shadow-[2px_2px_0px_0px_#0f172a]",
+                success: "bg-accent-green text-slate-900 border-slate-900 shadow-[2px_2px_0px_0px_#0f172a]",
+                warning: "bg-yellow-200 text-yellow-900 border-yellow-900 shadow-[2px_2px_0px_0px_#713f12]",
+            },
+        },
+        defaultVariants: {
+            variant: "default",
+        },
+    }
+);
 
-function Badge({ className, variant = "primary", ...props }: BadgeProps) {
-    const variants = {
-        primary: "bg-teal-100 text-teal-700 ring-1 ring-teal-200/60",
-        secondary: "bg-slate-100 text-slate-700 ring-1 ring-slate-200/60",
-        success: "bg-emerald-100 text-emerald-700 ring-1 ring-emerald-200/60",
-        warning: "bg-amber-100 text-amber-700 ring-1 ring-amber-200/60",
-        danger: "bg-red-100 text-red-700 ring-1 ring-red-200/60",
-        outline: "text-slate-700 border border-slate-300 bg-white",
-    };
+export interface BadgeProps
+    extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof badgeVariants> { }
 
+function Badge({ className, variant, ...props }: BadgeProps) {
     return (
-        <div
-            className={cn(
-                "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors",
-                variants[variant],
-                className
-            )}
-            {...props}
-        />
+        <div className={cn(badgeVariants({ variant }), className)} {...props} />
     );
 }
 
-export { Badge };
+export { Badge, badgeVariants };

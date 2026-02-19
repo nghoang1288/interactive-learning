@@ -2,7 +2,20 @@ import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { PlusCircle, Video, MessageSquare, TrendingUp, BarChart3, CheckCircle2, Stethoscope } from "lucide-react";
+import {
+  Play,
+  BookOpen,
+  Trophy,
+  Users,
+  ArrowRight,
+  Check,
+  Stethoscope,
+  Activity,
+  BrainCircuit
+} from "lucide-react";
+import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
+import { Card, CardContent } from "@/components/ui/Card";
 import { DemoVideoPlayer } from "@/components/home/DemoVideoPlayer";
 
 export default async function LandingPage() {
@@ -12,131 +25,191 @@ export default async function LandingPage() {
   }
 
   return (
-    <div className="w-full bg-white dark:bg-slate-950 overflow-hidden">
-      {/* ===== HERO SECTION ===== */}
-      <section className="relative py-24 md:py-36 overflow-hidden bg-white dark:bg-slate-950 w-full flex justify-center">
-        <div className="absolute -top-24 right-0 w-[30rem] h-[30rem] bg-teal-50/70 dark:bg-teal-900/20 rounded-full blur-[80px] opacity-60" />
-        <div className="absolute -bottom-24 left-0 w-[30rem] h-[30rem] bg-cyan-50/70 dark:bg-cyan-900/20 rounded-full blur-[80px] opacity-60" />
+    <div className="min-h-screen bg-bg font-body text-text overflow-x-hidden selection:bg-accent-cyan selection:text-slate-900">
 
-        <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 flex justify-center">
-          <div className="max-w-4xl mx-auto text-center">
-            <Badge variant="primary" className="mb-8 px-5 py-1.5 shadow-sm">🩺 Nền tảng học Y khoa thế hệ mới</Badge>
-            <h1 className="text-4xl md:text-7xl font-extrabold mb-8 tracking-tight text-slate-900 dark:text-white leading-[1.15]">
-              Học Y khoa <span className="bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-cyan-600 dark:from-teal-400 dark:to-cyan-400">tương tác</span><br />
-              thông minh hơn
-            </h1>
-            <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
-              Biến bài giảng video thành trải nghiệm học tập chủ động.
-              Tạo Quiz tích hợp — nắm vững kiến thức Y khoa ngay khi đang xem.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
-              <Link href="/register" className="w-full sm:w-auto btn btn-primary btn-lg rounded-2xl shadow-2xl shadow-teal-200/50 px-10 py-4.5 text-base font-bold bg-teal-600 border-0 hover:bg-black transition-all">
-                🚀 Bắt đầu miễn phí
-              </Link>
-              <a href="#demo" className="w-full sm:w-auto btn btn-secondary btn-lg rounded-2xl border-slate-200 text-slate-700 hover:bg-slate-50 px-10 py-4.5 text-base font-semibold transition-all">
-                ▶ Xem Demo
-              </a>
+      {/* ===== NAVBAR ===== */}
+      <nav className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
+        <div className="neo-card bg-white/90 backdrop-blur-md px-6 py-3 flex items-center justify-between w-full max-w-5xl rounded-full border-2 border-slate-900 shadow-neo mb-4">
+          <div className="flex items-center gap-2 font-heading font-bold text-xl text-slate-900">
+            <div className="w-10 h-10 bg-accent-cyan border-2 border-slate-900 rounded-lg flex items-center justify-center shadow-[2px_2px_0px_0px_#0f172a]">
+              <Stethoscope size={20} className="text-slate-900" />
             </div>
+            <span>Doctor<span className="text-primary">Learning</span></span>
           </div>
-        </div>
-      </section>
-
-      {/* ===== DEMO VIDEO SECTION ===== */}
-      <section id="demo" className="py-24 bg-slate-50/60 dark:bg-slate-900/60 border-y border-slate-100/80 dark:border-slate-800/80 w-full flex flex-col items-center">
-        <div className="w-full max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">🎬 Trải nghiệm thực tế</h2>
-            <p className="text-slate-500 dark:text-slate-400 text-lg">Mô phỏng hiển thị Quiz tương tác trên trình phát video.</p>
-          </div>
-          <DemoVideoPlayer />
-          <div className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { step: "1", title: "Upload", desc: "Tải lên video bài giảng" },
-              { step: "2", title: "Tạo Quiz", desc: "Đặt câu hỏi tại mốc giờ" },
-              { step: "3", title: "Tương tác", desc: "Dừng video để trả lời" },
-              { step: "4", title: "Kết quả", desc: "Đúng mới được xem tiếp" },
-            ].map((item) => (
-              <div key={item.step} className="text-center group">
-                <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-600 text-white font-bold text-base mb-5 shadow-xl shadow-teal-100 group-hover:bg-black group-hover:scale-110 transition-all duration-300">
-                  {item.step}
-                </div>
-                <h4 className="font-bold text-slate-900 dark:text-white mb-2 text-lg">{item.title}</h4>
-                <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed px-2">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== FEATURES SECTION ===== */}
-      <section className="py-28 bg-white dark:bg-slate-950 w-full flex justify-center">
-        <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-end justify-between mb-20 gap-8">
-            <div className="max-w-2xl">
-              <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight">✨ Tại sao chọn Doctor Learning?</h2>
-              <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed">Công cụ giúp chia sẻ và tiếp nhận kiến thức Y khoa hiệu quả hơn.</p>
-            </div>
-            <Link href="/register" className="group text-teal-600 font-bold hover:text-black flex items-center gap-2 transition-colors">
-              Khám phá tất cả <PlusCircle size={20} className="group-hover:translate-x-1 transition-transform" />
+          <div className="flex items-center gap-3">
+            <Link href="/login">
+              <Button variant="ghost" className="font-bold hover:bg-slate-100">Đăng nhập</Button>
+            </Link>
+            <Link href="/register">
+              <Button variant="neobrutalism" className="bg-accent-green hover:bg-green-400">
+                Đăng ký <ArrowRight size={16} className="ml-1" />
+              </Button>
             </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {[
-              { icon: PlusCircle, title: "Quản lý bài giảng", desc: "Tạo, chỉnh sửa và chia sẻ video bài giảng Y khoa của bạn.", color: "text-teal-600", bg: "bg-teal-50" },
-              { icon: MessageSquare, title: "Quiz thông minh", desc: "Người xem phải trả lời đúng mới có thể xem tiếp — đảm bảo nắm vững kiến thức.", color: "text-cyan-600", bg: "bg-cyan-50" },
-              { icon: BarChart3, title: "Báo cáo Insight", desc: "Xem chi tiết tiến độ học tập, biết được phần nào hay trả lời sai nhất.", color: "text-emerald-600", bg: "bg-emerald-50" },
-            ].map((feature) => (
-              <div key={feature.title} className="group p-10 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 hover:shadow-2xl hover:shadow-teal-100/30 dark:hover:shadow-teal-900/10 transition-all duration-500 hover:-translate-y-2">
-                <div className={cn("h-16 w-16 rounded-2xl flex items-center justify-center mb-8 transition-transform group-hover:rotate-6", feature.bg)}>
-                  <feature.icon className={cn("h-8 w-8", feature.color)} />
-                </div>
-                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">{feature.title}</h3>
-                <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-lg">{feature.desc}</p>
-              </div>
-            ))}
+        </div>
+      </nav>
+
+      {/* ===== HERO SECTION ===== */}
+      <section className="pt-40 pb-20 px-4 md:px-8 max-w-7xl mx-auto flex flex-col items-center text-center relative">
+        {/* Background blobs */}
+        <div className="absolute top-20 left-10 w-32 h-32 bg-accent-pink rounded-full blur-3xl opacity-60 animate-pulse" />
+        <div className="absolute top-40 right-10 w-40 h-40 bg-accent-cyan rounded-full blur-3xl opacity-60 animate-pulse delay-700" />
+
+        <Badge variant="neobrutalism" className="mb-6 px-4 py-1.5 text-sm bg-accent-purple animate-bounce">
+          🎓 Nền tảng học Y khoa tương tác #1
+        </Badge>
+
+        <h1 className="font-heading text-5xl md:text-7xl font-extrabold mb-6 leading-tight text-slate-900 max-w-4xl">
+          Học Y Khoa <span className="relative inline-block px-4 py-1 mx-2 bg-accent-cyan border-2 border-slate-900 rounded-lg shadow-neo rotate-2 transform hover:rotate-0 transition-transform cursor-default text-white" style={{ textShadow: '2px 2px 0 #000' }}>Tương Tác</span>
+          Thông Minh Hơn
+        </h1>
+
+        <p className="text-lg md:text-xl text-text-secondary mb-10 max-w-2xl font-medium">
+          Biến bài giảng video thụ động thành trải nghiệm chủ động.
+          Trả lời quiz ngay trên video, ghi nhớ kiến thức lâm sàng gấp 2 lần.
+        </p>
+
+        <div className="flex flex-col sm:flex-row items-center gap-4 mb-20 z-10">
+          <Link href="/register">
+            <Button size="lg" variant="neobrutalism" className="text-lg px-8 py-6 bg-accent-pink hover:bg-pink-300">
+              🚀 Bắt đầu miễn phí
+            </Button>
+          </Link>
+          <a href="#demo">
+            <Button size="lg" variant="outline" className="text-lg px-8 py-6 bg-white hover:bg-slate-50">
+              ▶ Xem Demo
+            </Button>
+          </a>
+        </div>
+
+        {/* Hero Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-4xl">
+          {[
+            { label: "Bác sĩ tin dùng", val: "2,000+", color: "bg-accent-green" },
+            { label: "Bài giảng", val: "500+", color: "bg-accent-cyan" },
+            { label: "Quiz tương tác", val: "10k+", color: "bg-accent-purple" },
+            { label: "Giờ học", val: "50k+", color: "bg-accent-pink" },
+          ].map((stat) => (
+            <div key={stat.label} className={`neo-card ${stat.color} p-4 flex flex-col items-center justify-center transform hover:-translate-y-1 transition-transform`}>
+              <span className="font-heading font-bold text-2xl text-slate-900">{stat.val}</span>
+              <span className="text-sm font-bold text-slate-800">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ===== DEMO SECTION ===== */}
+      <section id="demo" className="py-20 bg-slate-50 border-y-2 border-slate-900 relative">
+        <div className="max-w-6xl mx-auto px-4 md:px-8">
+          <div className="flex flex-col items-center mb-12">
+            <div className="w-16 h-16 bg-accent-cyan border-2 border-slate-900 rounded-full flex items-center justify-center shadow-neo mb-4">
+              <Play size={32} className="text-slate-900 ml-1" />
+            </div>
+            <h2 className="font-heading text-4xl font-bold text-slate-900 mb-4">Trải nghiệm thực tế</h2>
+            <p className="text-lg text-text-secondary">Video sẽ tự động dừng khi đến câu hỏi.</p>
+          </div>
+
+          <div className="neo-card bg-white p-2 md:p-4 border-4 shadow-[8px_8px_0px_0px_#0f172a]">
+            <div className="rounded-xl overflow-hidden border-2 border-slate-900">
+              <DemoVideoPlayer />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ===== CTA SECTION ===== */}
-      <section className="py-24 w-full flex justify-center">
-        <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="bg-slate-900 rounded-[4rem] p-10 md:p-24 text-center text-white relative overflow-hidden shadow-2xl">
-            <div className="absolute top-0 right-0 -mr-20 -mt-20 w-[40rem] h-[40rem] bg-teal-600/10 rounded-full blur-[120px]" />
-            <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-[40rem] h-[40rem] bg-cyan-600/10 rounded-full blur-[120px]" />
-            <div className="relative z-10">
-              <h2 className="text-4xl md:text-6xl font-extrabold mb-8 tracking-tight">Sẵn sàng nâng tầm kiến thức?</h2>
-              <p className="text-lg text-slate-300 mb-12 max-w-2xl mx-auto">Cùng xây dựng cộng đồng chia sẻ kiến thức Y khoa chất lượng cao.</p>
-              <Link href="/register" className="btn bg-teal-600 text-white hover:bg-teal-700 rounded-2xl px-12 py-4 font-extrabold shadow-lg border-0 transition-all inline-block">
-                🩺 Tham gia ngay — Miễn phí
-              </Link>
-            </div>
+      {/* ===== FEATURES GRID ===== */}
+      <section className="py-24 max-w-7xl mx-auto px-4 md:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="col-span-1 md:col-span-2 lg:col-span-1 flex flex-col justify-center">
+            <Badge variant="neobrutalism" className="w-fit mb-4 bg-accent-green">✨ Tính năng nổi bật</Badge>
+            <h2 className="font-heading text-4xl font-bold text-slate-900 mb-6">
+              Công cụ học tập <br />
+              <span className="text-primary underline decoration-4 decoration-accent-pink underline-offset-4">mạnh mẽ nhất</span>
+            </h2>
+            <p className="text-lg text-text-secondary mb-8">
+              Không chỉ là xem video. Đây là hệ thống Learning Management System (LMS) tập trung vào tương tác.
+            </p>
+            <Button variant="neobrutalism" className="w-fit">Khám phá tất cả tính năng</Button>
+          </div>
+
+          {[
+            {
+              icon: BrainCircuit,
+              title: "Quiz thông minh",
+              desc: "Video tự động dừng tại các điểm chốt kiến thức. Trả lời đúng mới được xem tiếp.",
+              bg: "bg-accent-purple"
+            },
+            {
+              icon: Activity,
+              title: "Theo dõi tiến độ",
+              desc: "Báo cáo chi tiết từng video, tỷ lệ trả lời đúng/sai để cải thiện lỗ hổng kiến thức.",
+              bg: "bg-accent-cyan"
+            },
+            {
+              icon: Users,
+              title: "Cộng đồng Y khoa",
+              desc: "Thảo luận, hỏi đáp ngay dưới từng tình huống lâm sàng trong bài giảng.",
+              bg: "bg-accent-pink"
+            },
+            {
+              icon: Trophy,
+              title: "Gamification",
+              desc: "Nhận huy hiệu, leo bảng xếp hạng khi hoàn thành các khóa học khó.",
+              bg: "bg-accent-green"
+            }
+          ].map((feat, idx) => (
+            <Card key={idx} className="group hover:bg-slate-50">
+              <CardContent className="p-8 flex flex-col h-full">
+                <div className={`w-14 h-14 ${feat.bg} border-2 border-slate-900 rounded-xl flex items-center justify-center shadow-neo mb-6 group-hover:scale-110 transition-transform`}>
+                  <feat.icon size={28} className="text-slate-900" />
+                </div>
+                <h3 className="font-heading text-xl font-bold mb-3">{feat.title}</h3>
+                <p className="text-text-secondary leading-relaxed">{feat.desc}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* ===== CTA ===== */}
+      <section className="py-20 px-4 md:px-8">
+        <div className="max-w-5xl mx-auto neo-card bg-slate-900 text-white p-12 md:p-20 text-center relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-accent-pink via-accent-cyan to-accent-green" />
+
+          <div className="relative z-10">
+            <h2 className="font-heading text-4xl md:text-5xl font-bold mb-6 text-white">Sẵn sàng nhập cuộc?</h2>
+            <p className="text-xl text-slate-300 mb-10 max-w-2xl mx-auto">
+              Tham gia cùng 2,000+ sinh viên y khoa và bác sĩ đang học tập mỗi ngày.
+            </p>
+            <Link href="/register">
+              <Button size="lg" className="h-16 px-10 text-xl bg-accent-green text-slate-900 hover:bg-green-400 border-2 border-white shadow-[4px_4px_0px_0px_#ffffff]">
+                Đăng ký miễn phí ngay
+              </Button>
+            </Link>
+            <p className="mt-6 text-sm text-slate-400">Không cần thẻ tín dụng • Hủy bất cứ lúc nào</p>
           </div>
         </div>
       </section>
 
       {/* ===== FOOTER ===== */}
-      <footer className="py-20 border-t border-slate-100 dark:border-slate-800 w-full flex justify-center">
-        <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 text-center text-slate-500 dark:text-slate-400 text-base">
-          <div className="flex items-center justify-center gap-2 text-slate-900 dark:text-white font-bold mb-6">
-            <Stethoscope className="text-teal-600 dark:text-teal-400" size={24} />
-            <span className="text-xl tracking-tight">Doctor <span className="text-teal-600 dark:text-teal-400">Learning</span></span>
+      <footer className="border-t-2 border-slate-900 bg-white py-12">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-2 font-heading font-bold text-xl text-slate-900">
+            <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center">
+              <Stethoscope size={16} className="text-white" />
+            </div>
+            <span>Doctor<span className="text-primary">Learning</span></span>
           </div>
-          <p>© 2026 Doctor Learning. Nền tảng học Y khoa tương tác.</p>
+          <div className="text-text-secondary font-medium">
+            © 2026 Interactive Learning Inc. All rights reserved.
+          </div>
+          <div className="flex gap-6">
+            <a href="#" className="font-bold hover:text-primary hover:underline">Điều khoản</a>
+            <a href="#" className="font-bold hover:text-primary hover:underline">Bảo mật</a>
+            <a href="#" className="font-bold hover:text-primary hover:underline">Liên hệ</a>
+          </div>
         </div>
       </footer>
     </div>
-  );
-}
-
-function Badge({ variant, className, children }: any) {
-  return (
-    <span className={cn(
-      "inline-flex items-center rounded-full text-xs font-semibold tracking-wide uppercase",
-      variant === "primary" ? "bg-teal-100 text-teal-700" : "bg-slate-100 text-slate-600",
-      className
-    )}>
-      {children}
-    </span>
   );
 }

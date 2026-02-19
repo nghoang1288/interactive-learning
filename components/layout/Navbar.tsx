@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/Button";
 import { LogOut, User, LayoutDashboard, Stethoscope } from "lucide-react";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
+
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
@@ -13,7 +13,7 @@ export function Navbar() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     return (
-        <nav className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white shadow-sm flex justify-center transition-colors duration-300 dark:bg-slate-950 dark:border-slate-800">
+        <nav className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white shadow-sm flex justify-center transition-colors duration-300">
             <div className="w-full max-w-7xl flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center gap-2">
                     <Link href="/" className="flex items-center gap-2.5 transition-opacity hover:opacity-90">
@@ -27,7 +27,7 @@ export function Navbar() {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <ThemeToggle />
+
 
                     {session ? (
                         <div className="relative">
@@ -72,7 +72,7 @@ export function Navbar() {
                     ) : (
                         <div className="flex items-center gap-2">
                             <Button asChild variant="ghost" size="sm" className="dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800"><Link href="/login">Đăng nhập</Link></Button>
-                            <Button asChild variant="primary" size="sm"><Link href="/register">Tham gia miễn phí</Link></Button>
+                            <Button asChild variant="default" size="sm"><Link href="/register">Tham gia miễn phí</Link></Button>
                         </div>
                     )}
                 </div>

@@ -73,8 +73,8 @@ export default function MyVideosPage() {
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                     <div>
-                        <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Video của tôi</h1>
-                        <p className="text-slate-500 dark:text-slate-400">Xem danh sách, chỉnh sửa hoặc thêm Quiz cho video bạn đã upload.</p>
+                        <h1 className="text-3xl font-bold tracking-tight text-slate-900">Video của tôi</h1>
+                        <p className="text-slate-500">Xem danh sách, chỉnh sửa hoặc thêm Quiz cho video bạn đã upload.</p>
                     </div>
                 </div>
                 <Button asChild className="bg-teal-600 hover:bg-teal-700">
@@ -85,7 +85,7 @@ export default function MyVideosPage() {
             </div>
 
             <Card>
-                <CardHeader className="pb-3 border-b border-slate-100 dark:border-slate-800">
+                <CardHeader className="pb-3 border-b border-slate-100">
                     <div className="flex items-center gap-4">
                         <div className="relative flex-1 max-w-sm">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
@@ -105,11 +105,11 @@ export default function MyVideosPage() {
                         </div>
                     ) : filteredVideos.length === 0 ? (
                         <div className="flex h-64 flex-col items-center justify-center text-center">
-                            <div className="h-20 w-20 rounded-full bg-slate-50 flex items-center justify-center mb-4 dark:bg-slate-900">
-                                <VideoIcon size={32} className="text-slate-300 dark:text-slate-600" />
+                            <div className="h-20 w-20 rounded-full bg-slate-50 flex items-center justify-center mb-4">
+                                <VideoIcon size={32} className="text-slate-300" />
                             </div>
-                            <h3 className="text-lg font-bold text-slate-900 dark:text-white">Chưa có video nào</h3>
-                            <p className="text-sm text-slate-500 max-w-xs mt-1 dark:text-slate-400">
+                            <h3 className="text-lg font-bold text-slate-900">Chưa có video nào</h3>
+                            <p className="text-sm text-slate-500 max-w-xs mt-1">
                                 Hãy upload video bài giảng đầu tiên để bắt đầu dạy học.
                             </p>
                             <Button asChild className="mt-4 bg-teal-600 hover:bg-teal-700" variant="outline">
@@ -119,8 +119,8 @@ export default function MyVideosPage() {
                     ) : (
                         <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">
-                                <thead className="bg-slate-50 dark:bg-slate-900/50">
-                                    <tr className="border-b border-slate-100 bg-slate-50/50 text-xs font-bold uppercase tracking-wider text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400">
+                                <thead className="bg-slate-50">
+                                    <tr className="border-b border-slate-100 bg-slate-50/50 text-xs font-bold uppercase tracking-wider text-slate-500">
                                         <th className="px-6 py-4">Bài giảng</th>
                                         <th className="px-6 py-4">Ngày tạo</th>
                                         <th className="px-6 py-4">Quiz</th>
@@ -136,13 +136,13 @@ export default function MyVideosPage() {
                                                         <VideoIcon size={24} />
                                                     </div>
                                                     <div className="flex-1 min-w-0">
-                                                        <p className="text-sm font-bold text-slate-900 line-clamp-1 dark:text-white">{video.title}</p>
-                                                        <p className="text-xs text-slate-500 line-clamp-1 mt-0.5 dark:text-slate-400">{video.description || "Không có mô tả"}</p>
+                                                        <p className="text-sm font-bold text-slate-900 line-clamp-1">{video.title}</p>
+                                                        <p className="text-xs text-slate-500 line-clamp-1 mt-0.5">{video.description || "Không có mô tả"}</p>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
-                                                <span className="flex items-center gap-1.5 text-sm text-slate-700 dark:text-slate-300">
+                                                <span className="flex items-center gap-1.5 text-sm text-slate-700">
                                                     <Clock size={14} className="text-slate-400" /> {formatDate(video.createdAt)}
                                                 </span>
                                             </td>

@@ -102,10 +102,10 @@ export default function DashboardPage() {
         <div className="space-y-8 pb-12">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+                    <h1 className="text-3xl font-bold tracking-tight text-slate-900">
                         Xin chào, {session?.user?.name || "Bác sĩ"} 👋
                     </h1>
-                    <p className="text-slate-500 dark:text-slate-400">Tổng quan hoạt động học tập và chia sẻ kiến thức của bạn.</p>
+                    <p className="text-slate-500">Tổng quan hoạt động học tập và chia sẻ kiến thức của bạn.</p>
                 </div>
                 <div className="flex gap-3">
                     <Button asChild variant="outline" className="rounded-xl border-slate-200">
@@ -125,13 +125,13 @@ export default function DashboardPage() {
                 {statsCards.map((stat) => (
                     <Card key={stat.title} className="hover:shadow-md transition-shadow border-slate-100">
                         <CardHeader className="flex flex-row items-center justify-between pb-2">
-                            <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">{stat.title}</CardTitle>
+                            <CardTitle className="text-sm font-medium text-slate-600">{stat.title}</CardTitle>
                             <div className={cn("rounded-xl p-2.5", stat.bg)}>
                                 <stat.icon className={cn("h-5 w-5", stat.color)} />
                             </div>
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold text-slate-900 dark:text-white">{stat.value}</div>
+                            <div className="text-2xl font-bold text-slate-900">{stat.value}</div>
                         </CardContent>
                     </Card>
                 ))}
@@ -172,10 +172,10 @@ export default function DashboardPage() {
                                             </div>
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <h4 className="text-sm font-bold text-slate-900 group-hover:text-teal-600 transition-colors truncate dark:text-white dark:group-hover:text-teal-400">
+                                            <h4 className="text-sm font-bold text-slate-900 group-hover:text-teal-600 transition-colors truncate">
                                                 {item.video.title}
                                             </h4>
-                                            <p className="text-xs text-slate-600 mt-1 flex items-center gap-2 dark:text-slate-300">
+                                            <p className="text-xs text-slate-600 mt-1 flex items-center gap-2">
                                                 {item.video.author?.name || "Ẩn danh"}
                                             </p>
                                         </div>
@@ -215,14 +215,14 @@ export default function DashboardPage() {
                     </Card>
 
                     {/* Recent activity */}
-                    <Card className="border-slate-100 dark:border-slate-800">
+                    <Card className="border-slate-100">
                         <CardHeader>
                             <CardTitle>Hoạt động gần đây</CardTitle>
                         </CardHeader>
                         <CardContent className="p-0">
-                            <div className="divide-y divide-slate-50 dark:divide-slate-800">
+                            <div className="divide-y divide-slate-50">
                                 {(!stats?.recentActivity || stats.recentActivity.length === 0) ? (
-                                    <div className="p-8 text-center text-sm text-slate-500 dark:text-slate-400">
+                                    <div className="p-8 text-center text-sm text-slate-500">
                                         Chưa có hoạt động nào.
                                     </div>
                                 ) : (
@@ -230,12 +230,12 @@ export default function DashboardPage() {
                                         <div key={act.id} className="flex items-start gap-3 p-4">
                                             <div className="mt-1 h-2 w-2 rounded-full bg-teal-500 shrink-0" />
                                             <div>
-                                                <p className="text-sm font-medium text-slate-900 dark:text-white">
+                                                <p className="text-sm font-medium text-slate-900">
                                                     <span className="font-bold">{act.user?.name || "Người dùng"}</span>
                                                     {act.completed ? " đã hoàn thành " : " đang xem "}
-                                                    <span className="text-teal-600 dark:text-teal-400">{act.video?.title}</span>
+                                                    <span className="text-teal-600">{act.video?.title}</span>
                                                 </p>
-                                                <p className="text-[10px] text-slate-600 mt-1 uppercase font-semibold tracking-wider dark:text-slate-400">
+                                                <p className="text-[10px] text-slate-600 mt-1 uppercase font-semibold tracking-wider">
                                                     {formatDate(act.updatedAt)}
                                                 </p>
                                             </div>
